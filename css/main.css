@@ -1,0 +1,38 @@
+@font-face { font-family: 'BMJUA'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff'); font-weight: normal; font-style: normal; }
+@keyframes done {
+    70% {
+        transform: scale(1.2)
+    }
+    100% {
+        transform: scale(1)
+    }
+}
+
+html {
+    font-family: BMJUA
+}
+body {
+  min-width: 550px;
+}
+#title-img {
+  margin-top: 40px;
+  width: 220px;
+  height: 220px;
+  opacity: 0.85;
+}
+#title {
+  position: relative;
+  top: -80px;
+  font-size: 50px;
+  font-weight: bold;
+  text-shadow:1px 1px 10px #f40
+}
+#buttons {
+  position: relative;
+  top: -60px;
+}
+
+.btn-img {
+  width: 100px;
+  height: 100px;
+}

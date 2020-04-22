@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="author" content="고니랑용주랑">
+  <title>보고니 빙고판</title>
+  <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/switch.css">
+  <link rel="stylesheet" href="css/bingo.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    var size = 5;
+	var count = 0;
+    var bingo = 0;
+  </script>
+</head>
+<body>
+  <center>
+    <div id="buttons">
+      <div id="button-group1" class="blanks">
+        <label>
+          <input type="radio" name="group" id="blank3" value=3> <span>3×3</span>
+        </label>
+        <label>
+          <input type="radio" name="group" id="blank4" value=4> <span>4×4</span>
+        </label>
+        <label>
+          <input type="radio" name="group" id="blank5" value=5 checked="checked"> <span>5×5</span>
+        </label>
+      </div>
+      <div id="button-group2">
+	    <div class="duplicate">
+	      <label class="label1">번호중복</label>
+          <label class="switch">
+            <input type="checkbox" id="checkbox">
+            <span class="slider"></span>
+          </label>
+		</div>
+		<div id="random">
+		  <label class="label2">번호생성</label>
+          <button id="random-button">랜 덤</button>
+		</div>
+      </div>
+    </div>
+    <div id="bingo-start">
+      <div class="bingo">
+        <table class="bingo-table">
+          <thead>
+		    <h3 id="title"><a id="chrome-link" href="https://support.google.com/chrome/answer/95417?co=GENIE.Platform%3DDesktop&hl=ko">Chrome 사용 권장</a></h1>
+          </thead>
+        </table>
+		<img id="start-img" src="../img/start.png">
+      </div>
+      <br>
+      <button id="game-start" class="game-start">Game Start!</button>
+	  <div id="score"></div>
+    </div>
+  </center>
+  <script src="js/table.js"></script>
+  <script src="js/bingo.js"></script>
+  <script src="../js/game-common.js"></script>
+</body>
+</html>

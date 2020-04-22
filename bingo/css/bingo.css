@@ -1,0 +1,178 @@
+@font-face { font-family: 'BMJUA'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff'); font-weight: normal; font-style: normal; }
+@keyframes done {
+    70% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+html {
+    font-family: BMJUA;
+}
+body {
+  min-width: 550px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+  font-size: 35px;
+  font-weight: bold;
+}
+h3 {
+  font-family: BMJUA;
+  font-size: 38px;
+  padding: .35rem;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  background: 0;
+}
+.bingo {
+  width: 500px;
+  height: 500px;
+  position: relative;
+  top: -10px;
+  text-align: center;
+}
+.bingo:after {
+  width: 500px;
+  height: 500px;
+  z-index: -1;
+  position: absolute;
+  margin-top: 53px;
+  left: 0;
+  top: 0;
+  content: "";
+  background: url("https://scontent-gmp1-1.cdninstagram.com/v/t51.2885-15/e35/91515162_159581078843243_6911703172673143207_n.jpg?_nc_ht=scontent-gmp1-1.cdninstagram.com&_nc_cat=111&_nc_ohc=RzeqUYM713UAX_NgiDW&oh=e1b2d66395e0193d7d12b7210f0ea64b&oe=5EC40CF0");
+  background-size: 500px 500px;
+  opacity: 0.5;
+}
+.bingo-table {
+  width: 500px;
+  height: 500px;
+  margin: 0px;
+  table-layout: fixed;
+  border-spacing: 0px;
+  border: 3px solid;
+}
+.bingo-table tbody {
+}
+.bingo-table td {
+  border: 1px solid #808080;
+  min-height: 95px;
+}
+.bingo-number {
+  overflow: hidden;
+  min-height: 54px;
+}
+.bingo-table td:hover {
+  color: #F588AD;
+}
+#buttons {
+  width: 500px;
+  height: 110px;
+}
+#button-group1 {
+  width: 58%;
+  height: 80px;
+  float: left;
+  margin-top: 10px;
+}
+.blanks {
+  padding: 5px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+  font-size: 20px;
+}
+.blanks label {
+  line-height: 70px;
+}
+.blanks span {
+  width: 70px;
+}
+.blanks input[type="radio"] {
+  display: none;
+}
+.blanks input[type="radio"] + span {
+  display: inline-block;
+  background: none;
+  border: 2px solid #dfdfdf;    
+  padding: 0px 8px;
+  text-align: center;
+  height: 35px;
+  line-height: 33px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.blanks input[type="radio"]:checked + span {
+  border: 3px solid skyblue;
+  background: skyblue;
+  color: #fff;
+}
+#blank3 + span {
+  position: relative;
+  left: 8px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+#blank5 + span {
+  position: relative;
+  right: 8px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+#button-group2 {
+  width: 40%;
+  float: right;
+  margin-top: 10px;
+  font-family: 'Single Day', cursive;
+  font-size: 30px;
+}
+.label1 {
+  position: relative;
+  top: -10px;
+}
+.label2 {
+  position: relative;
+  top: -6px;
+}
+#random-button {
+  font-family: 'Single Day', cursive;
+  font-size: 20px;
+  width: 80px;
+  height: 38px;
+  position: relative;
+  top: -10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.game-start {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-right: -4px;
+  margin-top: 20px;
+  border: 2px solid gray;
+  background-color: rgba(0,0,0,0);
+  color: gray;
+  padding: 5px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+  font-size: 30px;
+}
+.game-start:hover {
+  color: white;
+  border: 2px solid #2196F3;
+  background-color: #2196F3;
+  font-size: 35px;
+}
+#score {
+  margin-top: 15px;
+  font-weight: normal;
+}
+#start-img {
+  position: absolute;
+  width: 590px;
+  height:325px;
+  left: -40px;
+  top: 130px;
+  display: none;
+}
+.check-img {
+  cursor: pointer;
+}
