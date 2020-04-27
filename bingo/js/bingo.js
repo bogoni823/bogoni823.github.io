@@ -2,6 +2,7 @@ var st_btn = document.getElementById("game-start");
 st_btn.addEventListener("click", stBtn);
 var rand_btn = document.getElementById("random-button");
 rand_btn.addEventListener("click", randBtn);
+var file_input = document.getElementById("file_input");
 var arr = new Array(size*size);
 var arr_flag = new Array(size*size);
 for(var i=0; i<size*size; i++) arr_flag[i] = false;
@@ -10,6 +11,8 @@ var arr_y = new Array(57,156,255,353,452);
 var dup_check = true;
 var edit_id = false;
 var edit_value=false;
+var img_flag = false;
+changeTitle();
 
 function writeTitle() {
   return "<font color='red'>보고니</font> B I N G O";
@@ -38,7 +41,7 @@ function bingoCnt() {
   if(c2cnt==size) bingo++;
   return bingo;
 }
-function scoreChange() {
+function scoring() {
   bingo = bingoCnt();
   document.getElementById("score").innerHTML="<font color='red'>"+bingo+"</font>줄 ┃ <font color='red'>"+count+"</font>개";
 };
@@ -85,7 +88,7 @@ $(".bingo-number").click(function() {
         count--;
         $("#img"+id).remove();
       }
-      scoreChange();
+      scoring();
     }
   }
 });
@@ -95,7 +98,7 @@ $(document).on("click", ".bingo-table td", function() {
   if(st_btn.style.display=="none") {
     if(document.getElementById(num_id).innerHTML != "" && arr_flag[parseInt(num_id)-1]==false) {
       chkImg(num_id);
-      scoreChange();
+      scoring();
     }
   }
   else { document.getElementById(num_id).focus(); }
@@ -221,4 +224,16 @@ $(".blanks input").click(function() {
     sizeChange(value);
     makeTable();
   }
+});
+file_input.addEventListener('change',function(e){
+    var file = e.target.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = function(){
+      if(img_flag) $("#style-background").remove();
+	  else img_flag = true;
+      $("<style id='style-background'> .bingo.new:after { background: url('"+reader.result+"'); background-size: 500px 500px; opacity: 0.5; } </style>").appendTo($("head"));
+      $(".bingo").attr("class", "bingo new");
+    }
 });

@@ -3,6 +3,7 @@ const start = document.getElementById("start");
 let tmp = 1, numbers, count = 0, bonus = false, size = 1;
 const arr_flag = new Array(size*7);
 for(var i=0; i<size*7; i++) arr_flag[i] = false;
+changeTitle();
 
 function writeTitle() {
     return "<font color='red'>보고니</font> Lotto";

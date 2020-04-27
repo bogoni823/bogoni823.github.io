@@ -19,7 +19,7 @@
 .btn-3d.yellow:hover {background-color: #F0D264;}
 .btn-3d.cyan:hover   {background-color: #82D1E3;}
 
-.btn-3d:active {
+.btn-3d:hover {
 	top: 9px;
 }
 
@@ -32,7 +32,7 @@
         0 8px 0 1px rgba(0,0,0,0.4),
 				0 8px 8px 1px rgba(0,0,0,0.5);
 }
-.btn-3d.red:active {
+.btn-3d.red:hover {
 	box-shadow: 0 0 0 1px #c63702 inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
@@ -46,7 +46,7 @@
 				0 8px 0 1px rgba(0,0,0,.4),
 				0 8px 8px 1px rgba(0,0,0,0.5);
 }
-.btn-3d.blue:active {
+.btn-3d.blue:hover {
 	box-shadow: 0 0 0 1px #6191C2 inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
@@ -60,7 +60,7 @@
 				0 8px 0 1px rgba(0,0,0,.4),
 				0 8px 8px 1px rgba(0,0,0,0.5);
 }
-.btn-3d.green:active {
+.btn-3d.green:hover {
 	box-shadow: 0 0 0 1px #82c8a0 inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
@@ -74,7 +74,7 @@
 				0 8px 0 1px rgba(0,0,0,.4),
 				0 8px 8px 1px rgba(0,0,0,0.5);
 }
-.btn-3d.purple:active {
+.btn-3d.purple:hover {
 	box-shadow: 0 0 0 1px #cb99c5 inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
@@ -88,7 +88,7 @@
 				0 8px 0 1px rgba(0,0,0,.4),
 				0 8px 8px 1px rgba(0,0,0,0.5);
 }
-.btn-3d.cyan:active {
+.btn-3d.cyan:hover {
 	box-shadow: 0 0 0 1px #7fccde inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
@@ -102,7 +102,7 @@
 				0 8px 0 1px rgba(0,0,0,.4),
 				0 8px 8px 1px rgba(0,0,0,0.5);
 }
-.btn-3d.yellow:active {
+.btn-3d.yellow:hover {
 	box-shadow: 0 0 0 1px #F0D264 inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);

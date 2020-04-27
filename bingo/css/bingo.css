@@ -45,6 +45,23 @@ h3 {
   background-size: 500px 500px;
   opacity: 0.5;
 }
+.bingo.new {
+  width: 500px;
+  height: 500px;
+  position: relative;
+  top: -10px;
+  text-align: center;
+}
+.bingo.new:after {
+  width: 500px;
+  height: 500px;
+  z-index: -1;
+  position: absolute;
+  margin-top: 53px;
+  left: 0;
+  top: 0;
+  content: "";
+}
 .bingo-table {
   width: 500px;
   height: 500px;
@@ -154,6 +171,7 @@ h3 {
   padding: 5px;
   font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
   font-size: 30px;
+  cursor: pointer;
 }
 .game-start:hover {
   color: white;
@@ -176,3 +194,25 @@ h3 {
 .check-img {
   cursor: pointer;
 }
+.input-file [type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0 none;
+}
+.input-file .file-label {
+  display: inline-block;
+  min-width: 53px;
+  line-height: 28px;
+  padding: 0 10px;
+  border-radius: 2px;
+  font-size: 13px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+ }
