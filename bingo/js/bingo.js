@@ -2,6 +2,8 @@ var st_btn = document.getElementById("game-start");
 st_btn.addEventListener("click", stBtn);
 var rand_btn = document.getElementById("random-button");
 rand_btn.addEventListener("click", randBtn);
+var share_btn = document.getElementById("share-button");
+share_btn.addEventListener("click", shareBtn);
 var file_input = document.getElementById("file_input");
 var arr = new Array(size*size);
 var arr_flag = new Array(size*size);
@@ -12,6 +14,56 @@ var dup_check = true;
 var edit_id = false;
 var edit_value=false;
 var img_flag = false;
+
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-top-center",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "2000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
+var url_para = window.location.href.split(window.location.pathname)[1];
+if(url_para.length) {
+  try {
+    if(url_para[0] !== "?") reloadPage();
+    var arr_url_para = url_para.split("?")[1].split("&");
+    if(arr_url_para.length != 3) throw new Error("length error!");
+    var param_size = getSizeURL(arr_url_para[0]);
+    var param_dup = getDupURL(arr_url_para[1]);
+    var param_arr = getArrayURL(arr_url_para[2], param_size);
+
+    if(param_size != size) {
+      document.getElementById("blank"+size).checked = false;
+      document.getElementById("blank"+param_size).checked = true;
+    }
+    editTable(param_size);
+
+    if(param_dup+"" == dup_check+"") {
+      dup_check = !dup_check;
+      document.getElementById("checkbox").checked = true;
+    }
+
+    setArray(param_arr);
+    if(dup_check) dupFunc("del");
+    else viewNumFunc();
+  }
+  catch(e) {
+    reloadPage();
+  }
+}
+history.replaceState({}, null, location.pathname);
+
 changeTitle();
 
 function writeTitle() {
@@ -44,7 +96,7 @@ function bingoCnt() {
 function scoring() {
   bingo = bingoCnt();
   document.getElementById("score").innerHTML="<font color='red'>"+bingo+"</font>줄 ┃ <font color='red'>"+count+"</font>개";
-};
+}
 function stBtn() {
   $("#game-start").hide();
   rand_btn.disabled="disabled";
@@ -134,6 +186,7 @@ function viewNumFunc() {
   }
 }
 function dupFunc(flag) {
+  var dup_flag = false;
   for(var i=0; i<size*size-1; i++) {
     for(var j=i+1; j<size*size; j++) {
       if(arr[i] && arr[j] && arr[i] == arr[j]) {
@@ -146,10 +199,14 @@ function dupFunc(flag) {
             }
           }
         }
-        else if(flag == "del") { arr[j]=""; }
+        else if(flag == "del") {
+          arr[j]="";
+          dup_flag = true;
+        }
       }
     }
   }
+  if(dup_flag) toastr.info("중복된 번호를 삭제합니다");
   viewNumFunc();
 }
 function randFunc() {
@@ -172,7 +229,7 @@ $(document).on("propertychange change keyup paste input", ".bingo-number", funct
   var node = document.getElementById(id);
   var text = node.innerHTML;
   if(text.length > 3) node.innerHTML = "";
-  edit_id = parseInt(id)-1;
+  edit_id = parseInt(id)- 1;
   if(text == arr[edit_id]) return;
   edit_value = text.substring(0,3);
 });
@@ -212,28 +269,49 @@ function arrAddFunc() {
         document.getElementById(current_id+1).innerHTML = "";
         document.getElementById(current_id+1).focus();
       }, 800);
+      toastr.warning("중복된 번호입니다!");
     }
   }
+}
+function editTable(new_size) {
+  size = new_size;
+  $(".bingo-table tbody").remove();
+  initArray(new_size);
+  sizeChange(new_size);
+  makeTable();
 }
 $(".blanks input").click(function() {
   var value = $(this).attr("value");
   if(size != value) {
-    size = value;
-    $(".bingo-table tbody").remove();
-    initArray(value);
-    sizeChange(value);
-    makeTable();
+    editTable(value);
   }
 });
+function copy(val) {
+  var dummy = document.createElement("textarea");
+  dummy.style.position = "absolute";
+  dummy.style.top = "0px";
+  dummy.value = val;
+  document.body.appendChild(dummy);
+  dummy.select();
+  document.execCommand("copy");
+  document.body.removeChild(dummy);
+}
+function shareBtn() {
+  var url = window.location;
+  var uri = url + '?' + size + '&' + !dup_check + '&' + arr;
+  copy(uri);
+  toastr.info("주소가 복사되었습니다");
+}
 file_input.addEventListener('change',function(e){
-    var file = e.target.files[0];
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
+  var file = e.target.files[0];
+  var reader = new FileReader();
+  reader.readAsDataURL(file);
 
-    reader.onload = function(){
-      if(img_flag) $("#style-background").remove();
-	  else img_flag = true;
-      $("<style id='style-background'> .bingo.new:after { background: url('"+reader.result+"'); background-size: 500px 500px; opacity: 0.5; } </style>").appendTo($("head"));
-      $(".bingo").attr("class", "bingo new");
-    }
+  reader.onload = function() {
+    if(img_flag) $("#style-background").remove();
+    else img_flag = true;
+    $("<style id='style-background'> .bingo.new:after { background: url('"+reader.result+"'); background-size: 500px 500px; opacity: 0.5; } </style>").appendTo($("head"));
+    $(".bingo").attr("class", "bingo new");
+    toastr.info("이미지를 변경하였습니다");
+  }
 });

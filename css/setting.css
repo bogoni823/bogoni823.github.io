@@ -9,6 +9,12 @@
 #set-img {
   width: 30px;
   height: 33px;
+  -webkit-filter: grayscale(100%);
+  filter: gray;
+}
+#set-img:hover {
+  -webkit-filter: grayscale(0%);
+  filter: none;
 }
 .label {
    position: fixed;
