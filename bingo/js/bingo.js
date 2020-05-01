@@ -14,6 +14,7 @@ var dup_check = true;
 var edit_id = false;
 var edit_value=false;
 var img_flag = false;
+const page_name = "index.html";
 
 toastr.options = {
   "closeButton": false,
@@ -36,12 +37,12 @@ toastr.options = {
 var url_para = window.location.href.split(window.location.pathname)[1];
 if(url_para.length) {
   try {
-    if(url_para[0] !== "?") reloadPage();
+    if(url_para[0] !== "?") throw new Error("query error!");
     var arr_url_para = url_para.split("?")[1].split("&");
     if(arr_url_para.length != 3) throw new Error("length error!");
     var param_size = getSizeURL(arr_url_para[0]);
     var param_dup = getDupURL(arr_url_para[1]);
-    var param_arr = getArrayURL(arr_url_para[2], param_size);
+    var param_arr = getArrayURL(arr_url_para[2], param_size*param_size, 3);
 
     if(param_size != size) {
       document.getElementById("blank"+size).checked = false;
@@ -62,7 +63,7 @@ if(url_para.length) {
     reloadPage();
   }
 }
-history.replaceState({}, null, location.pathname);
+history.pushState({},null,"./");
 
 changeTitle();
 
@@ -229,7 +230,7 @@ $(document).on("propertychange change keyup paste input", ".bingo-number", funct
   var node = document.getElementById(id);
   var text = node.innerHTML;
   if(text.length > 3) node.innerHTML = "";
-  edit_id = parseInt(id)- 1;
+  edit_id = parseInt(id)-1;
   if(text == arr[edit_id]) return;
   edit_value = text.substring(0,3);
 });
@@ -286,18 +287,12 @@ $(".blanks input").click(function() {
     editTable(value);
   }
 });
-function copy(val) {
-  var dummy = document.createElement("textarea");
-  dummy.style.position = "absolute";
-  dummy.style.top = "0px";
-  dummy.value = val;
-  document.body.appendChild(dummy);
-  dummy.select();
-  document.execCommand("copy");
-  document.body.removeChild(dummy);
+function setArray(in_arr) {
+  arr.length = 0;
+  arr = in_arr;
 }
 function shareBtn() {
-  var url = window.location;
+  var url = window.location + page_name;
   var uri = url + '?' + size + '&' + !dup_check + '&' + arr;
   copy(uri);
   toastr.info("주소가 복사되었습니다");

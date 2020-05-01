@@ -15,16 +15,21 @@ function getDupURL(in_flag) {
   if(in_flag === "false" || in_flag === "true") return in_flag;
   reloadPage();
 }
-function getArrayURL(in_arr, in_size) {
-  var arr_size = in_size*in_size;
+function getArrayURL(in_arr, in_size, in_length) {
   in_arr = in_arr.split(',');
-  if(in_arr.length <= arr_size) {
-	  for(var i=0; i<in_arr.length; i++) if(in_arr[i].length > 3) in_arr[i] = "";
+  if(in_arr.length <= in_size) {
+	  for(var i=0; i<in_arr.length; i++) if(in_arr[i].length > in_length) in_arr[i] = "";
       return in_arr;
   }
   reloadPage();
 }
-function setArray(in_arr) {
-  arr.length = 0;
-  arr = in_arr;
+function copy(val) {
+  var dummy = document.createElement("textarea");
+  dummy.style.position = "absolute";
+  dummy.style.top = "0px";
+  dummy.value = val;
+  document.body.appendChild(dummy);
+  dummy.select();
+  document.execCommand("copy");
+  document.body.removeChild(dummy);
 }

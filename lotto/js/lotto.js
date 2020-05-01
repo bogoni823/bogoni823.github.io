@@ -1,8 +1,45 @@
 const rand = document.getElementById("rand");
 const start = document.getElementById("start");
+const share = document.getElementById("share-button");
 let tmp = 1, numbers, count = 0, bonus = false, size = 1;
-const arr_flag = new Array(size*7);
+let arr = new Array(size*7);
+let arr_flag = new Array(size*7);
 for(var i=0; i<size*7; i++) arr_flag[i] = false;
+const page_name = "index.html";
+
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "2000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
+
+var url_para = window.location.href.split(window.location.pathname)[1];
+if(url_para.length) {
+    try {
+        if(url_para[0] !== "?") throw new Error("query error!");
+        var arr_url_para = url_para.split("?")[1].split("&");
+        if(arr_url_para.length != 3) throw new Error("length error!");
+        var param_arr = getArrayURL(arr_url_para[2], 7, 2);
+        setArray(param_arr);
+    }
+    catch(e) {
+        reloadPage();
+    }
+}
+history.pushState({},null,"./");
+
 changeTitle();
 
 function writeTitle() {
@@ -68,7 +105,18 @@ function scoring() {
     var text = "<font color='red'>"+rank+"</font> ┃ <font color='red'>"+count+"</font>개";
     if(bonus) text += " + <font color='skyblue'>보너스</font>";
     document.getElementById("score").innerHTML = text;
-};
+}
+
+function setArray(in_arr, in_start=0, in_end=7) {
+    for(var i=in_start; i<in_end; i++) {
+        document.getElementById(i+1).innerText = in_arr[i];
+        setColor(i+1, getColor(in_arr[i]));
+    }
+}
+
+function getArray(in_start=0, in_end=7) {
+    for(var i=in_start; i<in_end; i++) arr[i] = document.getElementById(i+1).innerText;
+}
 
 rand.addEventListener("click", function() {
     tmp === 1 && (
@@ -107,6 +155,15 @@ start.addEventListener("click", function() {
             document.getElementById("start-img").remove()
         }, 1111)
     )
+})
+
+share.addEventListener("click", function() {
+    var url = window.location + page_name;
+    var dup_check = true;
+    getArray();
+    var uri = url + '?' + size + '&' + !dup_check + '&' + arr;
+    copy(uri);
+    toastr.info("주소가 복사되었습니다");
 })
 
 function clickBall(id) {
@@ -156,14 +213,12 @@ Array.from(document.querySelectorAll(".ball")).forEach(a => {
     })
 })
 
-
-
 $(document).on("propertychange change keyup paste input", ".ball", function() {
     var id = $(this).attr("id");
     var node = document.getElementById(id);
     var text = node.innerHTML;
     if(text.length > 2) node.innerHTML = "";
-});
+})
 
 $( window ).resize(function() {
     Array.from(document.querySelectorAll(".check-img")).forEach(a => {
@@ -173,6 +228,6 @@ $( window ).resize(function() {
         var y = ball.getBoundingClientRect().top;
         $("#"+a.id).offset({ left: x, top: y});
     })
-});
+})
 
 addImg("lotto", document.getElementById("numbers"), "img0", "check-img-del", "img/v.png", 0, 0);

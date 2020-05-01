@@ -214,3 +214,23 @@ body, div, button, h1 {
         margin-bottom: 0
     }
 }
+
+#share-button {
+    min-width: 53px;
+    line-height: 28px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 1px 18px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 6px;
+    border: 0;
+    outline: 0;
+}
+
+#share-button:hover {
+    background-color: #FF760E;
+}

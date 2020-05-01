@@ -11,14 +11,6 @@
   <link rel="stylesheet" href="css/button.css">
   <link rel="stylesheet" href="css/tooltip.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script>
-    var span_left = {
-      cyan : "28%",
-      yellow : "28%",
-      blue : "23.5%",
-      green : "25%"
-    }
-  </script>
 </head>
 <body>
   <center>
@@ -27,12 +19,12 @@
   <div id="buttons">
     <div id="button group1">
       <span id="span-cyan" data-tooltip-text="빙고 게임">
-        <a href="bingo/index.html" class="btn-3d cyan">
+        <a id="a-bingo" href="bingo" class="btn-3d cyan">
 	      <img id="btn-img bingo" class="btn-img" src="img/bingo.png">
 	    </a>
       </span>
       <span id="yellow" data-tooltip-text="로또 게임">
-        <a href="lotto/index.html" class="btn-3d yellow">
+        <a id="a-lotto" href="lotto" class="btn-3d yellow">
           <img id="lotto" class="btn-img" src="img/lotto.png">
         </a>
       </span>
@@ -52,5 +44,6 @@
   </div>
   </center>
   <script src="js/tooltip.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

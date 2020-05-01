@@ -4,13 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="marshall-ku">
-	<meta name="Modifier" content="고니랑용주랑">
+	<meta name="modifier" content="고니랑용주랑">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>보고니 로또</title>
     <link rel="shortcut icon" href="https://res.afreecatv.com/afreeca.ico">
     <link rel="icon" href="https://res.afreecatv.com/afreeca.ico">
+    <link rel="stylesheet" href="../css/toastr.min.css">
+    <link rel="stylesheet" href="../css/setting.css">
     <link rel="stylesheet" href="css/lotto.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../js/toastr.min.js"></script>
 </head>
 
 <body>
@@ -34,7 +37,19 @@
         <br>
 		<div id="score"></div>
     </div>
+    <div id="setting" class="setting">
+        <input id="toggle" type="checkbox">
+        <label for="toggle" class="setting label">
+            <img id="set-img" src="../img/set.png">
+        </label>
+        <div class="slide-menu">
+            <center>
+                <button id="share-button">공유하기</button>
+            </center>
+        </div>
+    </div>
     <script src="../js/game-common.js"></script>
+    <script src="../js/game-paramiter.js"></script>
     <script src="js/lotto.js"></script>
 </body>
 
