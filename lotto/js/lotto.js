@@ -75,10 +75,10 @@ function decryptEffect(elem, time) {
         const random = Math.floor(Math.random() * numbers.length);
         clearInterval(effect),
         elem.classList.add("done"),
-        elem.innerText = numbers[random],
-        numbers.splice(random, 1);
+        elem.innerText = numbers[random];
         var color = getColor(numbers[random]);
         setColor(elem.id, color);
+        numbers.splice(random, 1);
     },  time * 600 + 1000)
 }
 
