@@ -9,6 +9,7 @@
   <link rel="icon" href="https://res.afreecatv.com/afreeca.ico">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap">
   <link rel="stylesheet" href="../css/toastr.min.css">
+  <link rel="stylesheet" href="../css/tooltip.css">
   <link rel="stylesheet" href="../css/setting.css">
   <link rel="stylesheet" href="css/switch.css">
   <link rel="stylesheet" href="css/bingo.css">
@@ -37,15 +38,19 @@
       <div id="button-group2">
 	    <div class="duplicate">
 	      <label class="label1">번호중복</label>
-          <label class="switch">
-            <input type="checkbox" id="checkbox">
-            <span class="slider"></span>
-          </label>
-		</div>
-		<div id="random">
-		  <label class="label2">번호생성</label>
-          <button id="random-button">랜 덤</button>
-		</div>
+          <span id="span-dup" class="rand-tooltip" data-tooltip-text>
+            <label class="switch">
+              <input type="checkbox" id="checkbox">
+              <span class="slider"></span>
+            </label>
+          </span>
+        </div>
+        <div id="random">
+          <label class="label2">번호생성</label>
+          <span id="span-rand" class="rand-tooltip" data-tooltip-text>
+            <button id="random-button">랜 덤</button>
+          </span>
+        </div>
       </div>
     </div>
     <div id="bingo-start">
@@ -61,20 +66,28 @@
       <button id="game-start" class="game-start">Game Start!</button>
 	  <div id="score"></div>
     </div>
-	<div id="setting" class="setting">
+    <div id="setting" class="setting">
       <input id="toggle" type="checkbox">
       <label for="toggle" class="setting label">
-        <img id="set-img" src="../img/set.png">
+        <span id="span-set" data-tooltip-text="설정">
+          <img id="set-img" src="../img/set.png">
+        </span>
       </label>
       <div class="slide-menu">
         <div id="buttons-img-share">
-		  <div class="buttons-img">
+          <div class="buttons-img">
             <div class="input-file">
-              <label for="file_input" class="file-label">이미지 변경</label>
+			<span id="span-img" class="span-no-triangle" data-tooltip-text>
+              <label for="file_input" class="file-label">
+                이미지 변경
+              </label>
+			  </span>
               <input type="file" name="" id="file_input" class="file-input">
             </div>
 		  </div>
-          <button id="share-button">공유하기</button>
+          <span id="span-share" class="span-no-triangle" data-tooltip-text>
+            <button id="share-button">공유하기</button>
+          </span>
         </div>
       </div>
     </div>

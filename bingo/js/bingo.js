@@ -5,6 +5,8 @@ rand_btn.addEventListener("click", randBtn);
 var share_btn = document.getElementById("share-button");
 share_btn.addEventListener("click", shareBtn);
 var file_input = document.getElementById("file_input");
+var set_btn = document.getElementById("toggle");
+var dup_input = document.getElementById("checkbox");
 var arr = new Array(size*size);
 var arr_flag = new Array(size*size);
 for(var i=0; i<size*size; i++) arr_flag[i] = false;
@@ -14,6 +16,7 @@ var dup_check = true;
 var edit_id = false;
 var edit_value=false;
 var img_flag = false;
+var local_flag = false;
 const page_name = "index.html";
 
 toastr.options = {
@@ -52,18 +55,27 @@ if(url_para.length) {
 
     if(param_dup+"" == dup_check+"") {
       dup_check = !dup_check;
-      document.getElementById("checkbox").checked = true;
+      dup_input.checked = true;
     }
 
     setArray(param_arr);
     if(dup_check) dupFunc("del");
-    else viewNumFunc();
+    else {
+      $("<style id='style-span-dup'>#span-dup:hover:after{ content: '중복된 번호를 허용합니다'; }</style>").appendTo($("head"));
+      viewNumFunc();
+    }
   }
   catch(e) {
     reloadPage();
   }
 }
-history.pushState({},null,"./");
+try {
+  history.pushState({},null,"./");
+}
+catch(e) {
+  local_flag = true;
+  history.pushState({},null,location.pathname);
+}
 
 changeTitle();
 
@@ -102,7 +114,7 @@ function stBtn() {
   $("#game-start").hide();
   rand_btn.disabled="disabled";
   rand_btn.style.cursor = "default";
-  document.getElementById("checkbox").disabled="disabled";
+  dup_input.disabled="disabled";
   $(".slider").css("cursor", "default");
   for(var i=3; i<=5; i++) {
     document.getElementById("blank"+i).disabled="disabled"
@@ -220,10 +232,13 @@ function randBtn() {
   }
   if(dup_check) dupFunc("add");
 }
-$("#checkbox").click(function() {
+dup_input.addEventListener('change',function(e) {
   dup_check = $("input:checkbox[id='checkbox']").is(":checked") == false;
-  if(dup_check) dupFunc("del");
-  else dup_check = false;
+  if(dup_check) {
+    dupFunc("del");
+    document.getElementById("style-span-dup").remove();
+  }
+  else $("<style id='style-span-dup'>#span-dup:hover:after{ content: '중복된 번호를 허용합니다'; }</style>").appendTo($("head"));
 });
 $(document).on("propertychange change keyup paste input", ".bingo-number", function() {
   var id = $(this).attr("id");
@@ -292,7 +307,8 @@ function setArray(in_arr) {
   arr = in_arr;
 }
 function shareBtn() {
-  var url = window.location + page_name;
+  var url = window.location;
+  if(!local_flag) url += page_name;
   var uri = url + '?' + size + '&' + !dup_check + '&' + arr;
   copy(uri);
   toastr.info("주소가 복사되었습니다");
@@ -309,4 +325,8 @@ file_input.addEventListener('change',function(e){
     $(".bingo").attr("class", "bingo new");
     toastr.info("이미지를 변경하였습니다");
   }
+});
+set_btn.addEventListener('change',function(e) {
+  $("<style id='style-span-set'> #span-set:after { opacity: 0; }#span-set:before { opacity: 0; } </style>").appendTo($("head"));
+  setTimeout(function() {document.getElementById("style-span-set").remove();}, 400);
 });

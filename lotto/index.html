@@ -10,6 +10,7 @@
     <link rel="shortcut icon" href="https://res.afreecatv.com/afreeca.ico">
     <link rel="icon" href="https://res.afreecatv.com/afreeca.ico">
     <link rel="stylesheet" href="../css/toastr.min.css">
+    <link rel="stylesheet" href="../css/tooltip.css">
     <link rel="stylesheet" href="../css/setting.css">
     <link rel="stylesheet" href="css/lotto.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -40,11 +41,15 @@
     <div id="setting" class="setting">
         <input id="toggle" type="checkbox">
         <label for="toggle" class="setting label">
-            <img id="set-img" src="../img/set.png">
+            <span id="span-set" data-tooltip-text="설정">
+                <img id="set-img" src="../img/set.png">
+            </span>
         </label>
         <div class="slide-menu">
             <center>
-                <button id="share-button">공유하기</button>
+                <span id="span-share" class="span-no-triangle" data-tooltip-text>
+                    <button id="share-button">공유하기</button>
+                </span>
             </center>
         </div>
     </div>

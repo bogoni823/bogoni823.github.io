@@ -211,7 +211,7 @@ h3 {
   padding: 1px 10px;
   border-radius: 6px;
   font-size: 13px;
-  background-color: #333;
+  background-color: #AAC3DC;
   color: #fff;
   text-align: center;
   cursor: pointer;
@@ -230,7 +230,8 @@ h3 {
   font-size: 13px;
   font-weight: bold;
   padding: 1px 18px;
-  background-color: #333;
+  background-color: #AAC3DC;
+
   color: #fff;
   text-align: center;
   cursor: pointer;
@@ -243,4 +244,64 @@ h3 {
 }
 .toast-message {
   font-size: 18px;
+}
+[data-tooltip-text]:hover:after {
+  min-width: 30px;
+  font-size: 12px;
+  padding: 2px 8px;
+  top: 85%;
+  left: -25%;
+}
+#span-set:hover:before {
+  content: "";
+  position: absolute;
+  top: 67%;
+  left: 70%;
+  margin-left: -10px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent rgba(0, 0, 0, 0.8) transparent;
+}
+.rand-tooltip {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+}
+.rand-tooltip:hover:after {
+  content: "중복된 번호를 삭제합니다";
+  min-width: 140px;
+  font-size: 12px;
+  padding: 5px 12px;
+  top: 40px;
+  left: 0px;
+}
+.rand-tooltip:hover:before {
+  content: "";
+  position: absolute;
+  top: 30px;
+  left: 44px;
+  margin-left: -10px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent rgba(0, 0, 0, 0.8) transparent;
+}
+#span-rand:hover:after {
+  top: 44px;
+  content: "1~100의 무작위 숫자를 생성합니다";
+}
+#span-rand:hover:before {
+  top: 34px;
+}
+.span-no-triangle:hover:after {
+  position: absolute;
+  top: 35px;
+  padding: 5px 12px;
+}
+#span-img:hover:after {
+  content: "클릭하면 이미지를 변경합니다";
+  left: 13px;
+  width: 164px;
+}
+#span-share:hover:after {
+  content: "클릭하면 주소를 복사합니다";
+  left: -107px;
+  width: 152px;
 }

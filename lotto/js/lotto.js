@@ -1,28 +1,30 @@
 const rand = document.getElementById("rand");
 const start = document.getElementById("start");
 const share = document.getElementById("share-button");
+const setting = document.getElementById("toggle");
 let tmp = 1, numbers, count = 0, bonus = false, size = 1;
 let arr = new Array(size*7);
 let arr_flag = new Array(size*7);
 for(var i=0; i<size*7; i++) arr_flag[i] = false;
+let local_flag = false;
 const page_name = "index.html";
 
 toastr.options = {
-    "closeButton": false,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": false,
-    "positionClass": "toast-top-center",
-    "preventDuplicates": false,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "2000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-top-center",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "2000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
 }
 
 var url_para = window.location.href.split(window.location.pathname)[1];
@@ -38,7 +40,13 @@ if(url_para.length) {
         reloadPage();
     }
 }
-history.pushState({},null,"./");
+try {
+  history.pushState({},null,"./");
+}
+catch(e) {
+  local_flag = true;
+  history.pushState({},null,location.pathname);
+}
 
 changeTitle();
 
@@ -158,7 +166,8 @@ start.addEventListener("click", function() {
 })
 
 share.addEventListener("click", function() {
-    var url = window.location + page_name;
+    var url = window.location;
+    if(!local_flag) url += page_name;
     var dup_check = true;
     getArray();
     var uri = url + '?' + size + '&' + !dup_check + '&' + arr;
@@ -229,5 +238,10 @@ $( window ).resize(function() {
         $("#"+a.id).offset({ left: x, top: y});
     })
 })
+
+setting.addEventListener('change',function(e) {
+    $("<style id='style-span-set'> #span-set:after { opacity: 0; }#span-set:before { opacity: 0; } </style>").appendTo($("head"));
+    setTimeout(function() {document.getElementById("style-span-set").remove();}, 400);
+});
 
 addImg("lotto", document.getElementById("numbers"), "img0", "check-img-del", "img/v.png", 0, 0);
