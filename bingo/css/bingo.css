@@ -75,6 +75,7 @@ h3 {
 .bingo-table td {
   border: 1px solid #808080;
   min-height: 95px;
+  white-space: nowrap;
 }
 .bingo-number {
   overflow: hidden;
@@ -159,6 +160,19 @@ h3 {
   top: -10px;
   font-weight: bold;
   cursor: pointer;
+  border: 0.1px solid #AAA;
+  background: #FFF;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+  background: -moz-linear-gradient(top, #fff, #ededed);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+}
+#random-button:hover {
+  border: 1px solid #2196F3;
+  color: #2196F3;
+}
+#random-button:disabled:hover {
+  border: 0.1px solid #AAA;
+  color: #6D6D6D;
 }
 .game-start {
   border-top-left-radius: 5px;
@@ -244,6 +258,9 @@ h3 {
 }
 .toast-message {
   font-size: 18px;
+}
+.toast-title {
+  font-size: 22px;
 }
 [data-tooltip-text]:hover:after {
   min-width: 30px;

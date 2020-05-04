@@ -31,3 +31,15 @@ body {
   position: relative;
   top: -60px;
 }
+#span-cyan:hover:after {
+  left: 28%;
+}
+#span-yellow:hover:after {
+  left: 28%;
+}
+#span-blue:hover:after {
+  left: 23.5%;
+}
+#span-green:hover:after {
+  left: 25%;
+}

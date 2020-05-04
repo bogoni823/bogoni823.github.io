@@ -31,9 +31,9 @@ var url_para = window.location.href.split(window.location.pathname)[1];
 if(url_para.length) {
     try {
         if(url_para[0] !== "?") throw new Error("query error!");
-        var arr_url_para = url_para.split("?")[1].split("&");
+        var arr_url_para = url_para.substr(1,url_para.length-1).split("&");
         if(arr_url_para.length != 3) throw new Error("length error!");
-        var param_arr = getArrayURL(arr_url_para[2], 7, 2);
+        var param_arr = getArrayURL(decodeURI(arr_url_para[2]), 7, 2);
         setArray(param_arr);
     }
     catch(e) {
@@ -170,9 +170,10 @@ share.addEventListener("click", function() {
     if(!local_flag) url += page_name;
     var dup_check = true;
     getArray();
-    var uri = url + '?' + size + '&' + !dup_check + '&' + arr;
+    var uri = url + '?' + size + '&' + !dup_check + '&' + encodeURI(arr);
     copy(uri);
     toastr.info("주소가 복사되었습니다");
+    if(uri.length > 128) toastr.warning("디스코드를 통해 전달하세요!", "길이 초과!", {timeOut: 5000});
 })
 
 function clickBall(id) {

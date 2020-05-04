@@ -41,11 +41,11 @@ var url_para = window.location.href.split(window.location.pathname)[1];
 if(url_para.length) {
   try {
     if(url_para[0] !== "?") throw new Error("query error!");
-    var arr_url_para = url_para.split("?")[1].split("&");
+    var arr_url_para = url_para.substr(1,url_para.length-1).split("&");
     if(arr_url_para.length != 3) throw new Error("length error!");
     var param_size = getSizeURL(arr_url_para[0]);
     var param_dup = getDupURL(arr_url_para[1]);
-    var param_arr = getArrayURL(arr_url_para[2], param_size*param_size, 3);
+    var param_arr = getArrayURL(decodeURI(arr_url_para[2]), param_size*param_size, 3);
 
     if(param_size != size) {
       document.getElementById("blank"+size).checked = false;
@@ -243,11 +243,9 @@ dup_input.addEventListener('change',function(e) {
 $(document).on("propertychange change keyup paste input", ".bingo-number", function() {
   var id = $(this).attr("id");
   var node = document.getElementById(id);
-  var text = node.innerHTML;
-  if(text.length > 3) node.innerHTML = "";
   edit_id = parseInt(id)-1;
-  if(text == arr[edit_id]) return;
-  edit_value = text.substring(0,3);
+  if(node.innerHTML.length > 3) node.innerHTML = "";
+  edit_value = node.innerHTML.substring(0,3);
 });
 $(document).on("blur", ".bingo-number", function() {
   arrAddFunc();
@@ -309,9 +307,10 @@ function setArray(in_arr) {
 function shareBtn() {
   var url = window.location;
   if(!local_flag) url += page_name;
-  var uri = url + '?' + size + '&' + !dup_check + '&' + arr;
+  var uri = url + '?' + size + '&' + !dup_check + '&' + encodeURI(arr);
   copy(uri);
   toastr.info("주소가 복사되었습니다");
+  if(uri.length > 128) toastr.warning("디스코드를 통해 전달하세요!", "길이 초과!", {timeOut: 5000});
 }
 file_input.addEventListener('change',function(e){
   var file = e.target.files[0];
