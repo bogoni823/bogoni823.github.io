@@ -199,8 +199,6 @@ h3 {
 }
 #start-img {
   position: absolute;
-  width: 590px;
-  height:325px;
   left: -40px;
   top: 130px;
   display: none;

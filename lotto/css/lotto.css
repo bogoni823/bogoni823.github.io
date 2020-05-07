@@ -173,8 +173,6 @@ body, div, button, h1 {
 
 #start-img {
     position: absolute;
-    width: 590px;
-    height:325px;
     display: none;
 }
 
