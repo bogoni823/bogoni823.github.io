@@ -17,6 +17,7 @@ var edit_id = false;
 var edit_value=false;
 var img_flag = false;
 var local_flag = false;
+var dblclick_flag = false;
 const page_name = "index.html";
 
 toastr.options = {
@@ -85,6 +86,11 @@ function writeTitle() {
 function initArray(size) {
   arr.length = 0;
   arr = new Array(size*size);
+  if(arr.length > 25) {
+    arr_flag.length = 0;
+    arr_flag = new Array(size*size);
+    for(var i=0; i<size*size; i++) arr_flag[i] = false;
+  }
 }
 function bingoCnt() {
   var bingo = 0;
@@ -116,10 +122,9 @@ function stBtn() {
   rand_btn.style.cursor = "default";
   dup_input.disabled="disabled";
   $(".slider").css("cursor", "default");
-  for(var i=3; i<=5; i++) {
-    document.getElementById("blank"+i).disabled="disabled"
-    $(".blanks input[type='radio'] + span").css("cursor", "default");
-  }
+  for(var i=3; i<=5; i++) document.getElementById("blank"+i).disabled="disabled";
+  document.getElementById("blank10").disabled="disabled";
+  $(".blanks input[type='radio'] + span").css("cursor", "default");
   startImg();
   setTimeout(function() {
     $("#start-img").remove();
@@ -159,7 +164,7 @@ $(".bingo-number").click(function() {
 });
 $(document).on("click", ".bingo-table td", function() {
   var id = $(this).attr("id");
-  num_id = id.split("td")[1];
+  var num_id = id.split("td")[1];
   if(st_btn.style.display=="none") {
     if(document.getElementById(num_id).innerHTML != "" && arr_flag[parseInt(num_id)-1]==false) {
       chkImg(num_id);
@@ -173,17 +178,23 @@ function clickImg(id) {
   count--;
 }
 function sizeChange(size) {
+  arr_x.length = 0;
+  arr_y.length = 0;
   if(size == 5) {
-    arr_x.splice(0,5,3,101,200,299,397);
-    arr_y.splice(0,5,57,156,255,353,452);
+    arr_x = new Array(3,101,200,299,397);
+    arr_y = new Array(57,156,255,353,452);
   }
   else if(size == 4) {
-    arr_x.splice(0,5,2,125,248,372,0);
-    arr_y.splice(0,5,56,179,302,425,0);
+    arr_x = new Array(2,125,248,372);
+    arr_y = new Array(56,179,302,425);
   }
   else if(size == 3) {
-    arr_x.splice(0,5,2,166,330,0,0);
-    arr_y.splice(0,5,56,220,384,0,0);
+    arr_x = new Array(2,166,330);
+    arr_y = new Array(56,220,384);
+  }
+  else if(size == 10) {
+    arr_x = new Array(3,52,101,150,199,248,298,348,397.75, 447.25);
+    arr_y = new Array(56.2,105,154,203,252,301,350.5,400.25,450.8,500.25);
   }
   else {
     alert("Size Error");
@@ -226,6 +237,10 @@ function randFunc() {
   return String(Math.floor(Math.random() * 100) + 1);
 }
 function randBtn() {
+  if(!dblclick_flag) {
+    dblclick_flag = true;
+    $("<style id='style-span-10'>#span-10:hover:after{ width:176px;left:33px;content:'클릭하면 빙고판을 초기화합니다'; }</style>").appendTo($("head"));
+  }
   for(var i=0; i<size*size; i++) {
     arr[i] = randFunc();
     viewNumFunc();
@@ -298,6 +313,18 @@ $(".blanks input").click(function() {
   var value = $(this).attr("value");
   if(size != value) {
     editTable(value);
+  }
+  if(size == 10) {
+    dblclick_flag = !dblclick_flag;
+    if(dblclick_flag) {
+      $("<style id='style-span-10'>#span-10:hover:after{ width:176px;left:33px;content:'클릭하면 빙고판을 초기화합니다'; }</style>").appendTo($("head"));
+      for(var i=0; i<size*size; i++) arr[i] = String(i+1);
+    }
+    else {
+      if(document.getElementById("style-span-10")) document.getElementById("style-span-10").remove();
+      for(var i=0; i<size*size; i++) arr[i] = "";
+    }
+    viewNumFunc();
   }
 });
 function setArray(in_arr) {

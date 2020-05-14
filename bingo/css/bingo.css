@@ -92,15 +92,16 @@ h3 {
   width: 58%;
   height: 80px;
   float: left;
-  margin-top: 10px;
+  margin-top: 5px;
+}
+#button-group1-bottom {
+  top: 45px;
+  left: 15px;
 }
 .blanks {
   padding: 5px;
   font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
   font-size: 20px;
-}
-.blanks label {
-  line-height: 70px;
 }
 .blanks span {
   width: 70px;
@@ -135,6 +136,14 @@ h3 {
   right: 8px;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+}
+#blank10 + span {
+  position:relative;
+  top: 8px;
+
+//  margin: 5px;
+  border-radius: 20px;
+  width: 250px;
 }
 #button-group2 {
   width: 40%;
@@ -319,4 +328,15 @@ h3 {
   content: "클릭하면 주소를 복사합니다";
   left: -107px;
   width: 152px;
+}
+#span-10:hover:after {
+  top: 44px;
+  right: -2.25px;
+  left: -2.25px;
+  font-weight: bold;
+  content: "클릭하면 1~100의 정렬된 숫자를 생성합니다";
+}
+#span-10:hover:before {
+  top: 34px;
+  left: 138px;
 }
