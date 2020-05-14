@@ -333,6 +333,7 @@ h3 {
   top: 44px;
   right: -2.25px;
   left: -2.25px;
+  padding: 0px 12px;
   font-weight: bold;
   content: "클릭하면 1~100의 정렬된 숫자를 생성합니다";
 }

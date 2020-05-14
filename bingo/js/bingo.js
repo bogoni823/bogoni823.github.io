@@ -11,7 +11,7 @@ var arr = new Array(size*size);
 var arr_flag = new Array(size*size);
 for(var i=0; i<size*size; i++) arr_flag[i] = false;
 var arr_x = new Array(3,101,200,299,397);
-var arr_y = new Array(57,156,255,353,452);
+var arr_y = new Array(56,154,253,352,450);
 var dup_check = true;
 var edit_id = false;
 var edit_value=false;
@@ -127,7 +127,7 @@ function stBtn() {
   $(".blanks input[type='radio'] + span").css("cursor", "default");
   startImg();
   setTimeout(function() {
-    $("#start-img").remove();
+    document.getElementsByClassName("bingo")[0].removeChild(document.getElementById("start-img"));
   }, 1111);
   for(var i=1; i<=size*size; i++) {
     var num = document.getElementById(i);
@@ -156,7 +156,7 @@ $(".bingo-number").click(function() {
       else {
         arr_flag[parseInt(id)-1] = false;
         count--;
-        $("#img"+id).remove();
+        document.getElementById("bingo-start").removeChild(document.getElementById("img"+id));
       }
       scoring();
     }
@@ -182,7 +182,7 @@ function sizeChange(size) {
   arr_y.length = 0;
   if(size == 5) {
     arr_x = new Array(3,101,200,299,397);
-    arr_y = new Array(57,156,255,353,452);
+    arr_y = new Array(56,154,253,352,450);
   }
   else if(size == 4) {
     arr_x = new Array(2,125,248,372);
@@ -251,7 +251,7 @@ dup_input.addEventListener('change',function(e) {
   dup_check = $("input:checkbox[id='checkbox']").is(":checked") == false;
   if(dup_check) {
     dupFunc("del");
-    document.getElementById("style-span-dup").remove();
+    document.head.removeChild(document.getElementById("style-span-dup"));
   }
   else $("<style id='style-span-dup'>#span-dup:hover:after{ content: '중복된 번호를 허용합니다'; }</style>").appendTo($("head"));
 });
@@ -294,7 +294,7 @@ function arrAddFunc() {
       addImg("bingo", $(".bingo-table"), ("box"+dup_id), "box-img", "img/box.png", xx, yy);
       setTimeout(function() {
         td.style.color = "black";
-        $("#box"+dup_id).remove();
+        document.getElementsByClassName("bingo-table")[0].removeChild(document.getElementById("box"+dup_id));
         document.getElementById(current_id+1).innerHTML = "";
         document.getElementById(current_id+1).focus();
       }, 800);
@@ -304,7 +304,7 @@ function arrAddFunc() {
 }
 function editTable(new_size) {
   size = new_size;
-  $(".bingo-table tbody").remove();
+  document.getElementsByTagName("table")[0].removeChild(document.getElementsByTagName("tbody")[0]);
   initArray(new_size);
   sizeChange(new_size);
   makeTable();
@@ -321,7 +321,7 @@ $(".blanks input").click(function() {
       for(var i=0; i<size*size; i++) arr[i] = String(i+1);
     }
     else {
-      if(document.getElementById("style-span-10")) document.getElementById("style-span-10").remove();
+      if(document.getElementById("style-span-10")) document.head.removeChild(document.getElementById("style-span-10"));
       for(var i=0; i<size*size; i++) arr[i] = "";
     }
     viewNumFunc();
@@ -345,7 +345,7 @@ file_input.addEventListener('change',function(e){
   reader.readAsDataURL(file);
 
   reader.onload = function() {
-    if(img_flag) $("#style-background").remove();
+    if(img_flag) document.head.removeChild(document.getElementById("style-background"));
     else img_flag = true;
     $("<style id='style-background'> .bingo.new:after { background: url('"+reader.result+"'); background-size: 500px 500px; opacity: 0.5; } </style>").appendTo($("head"));
     $(".bingo").attr("class", "bingo new");
@@ -354,5 +354,5 @@ file_input.addEventListener('change',function(e){
 });
 set_btn.addEventListener('change',function(e) {
   $("<style id='style-span-set'> #span-set:after { opacity: 0; }#span-set:before { opacity: 0; } </style>").appendTo($("head"));
-  setTimeout(function() {document.getElementById("style-span-set").remove();}, 400);
+  setTimeout(function() {document.head.removeChild(document.getElementById("style-span-set"));}, 400);
 });

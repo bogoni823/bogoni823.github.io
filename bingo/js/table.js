@@ -14,13 +14,13 @@ function makeTable() {
     }
     tbody.appendChild(tr[j]);
   }
-  if(document.getElementById("bingo-number10")) document.getElementById("bingo-number10").remove();
+  if(document.getElementById("bingo-number10")) document.head.removeChild(document.getElementById("bingo-number10"));
   if(size == 5) tbody.style.height = "99px";
   else if(size == 4) tbody.style.height = "124px";
   else if(size == 3) tbody.style.height = "165px";
   else if(size == 10) {
     tbody.style.fontSize = "16px";
-    $("<style id='bingo-number10'> .bingo-number { min-height:25px; } </style>").appendTo($("head"));
+    $("<style id='bingo-number10'> .bingo-table td { min-height:45.5px; } .bingo-number { min-height:25px; } </style>").appendTo($("head"));
   }
   $(".bingo-table").append(tbody);
   for(var i=1; i<=size*size; i++) $("#"+i).attr("contenteditable", true);

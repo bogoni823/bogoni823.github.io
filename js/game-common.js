@@ -8,7 +8,7 @@ function checkBroswer() {
 
 function changeTitle() {
     if(checkBroswer()) {
-        document.getElementById("chrome-link").remove();
+        document.getElementById("chrome-link").parentNode.removeChild(document.getElementById("chrome-link"));
         document.getElementById("title").innerHTML = writeTitle();
     }
 }
@@ -39,6 +39,6 @@ $(document).on("click", ".check-img", function() {
     var id = id_str.split("img")[1];
     arr_flag[parseInt(id)-1] = false;
     clickImg(id);
-    $(this).remove();
+    document.getElementById(id_str).parentNode.removeChild(document.getElementById(id_str));
     scoring();
 });

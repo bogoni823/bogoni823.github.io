@@ -160,7 +160,7 @@ start.addEventListener("click", function() {
             start.style.display = "none"
         }, 400),
         setTimeout(function() {
-            document.getElementById("start-img").remove()
+            document.getElementById("wrapper").removeChild(document.getElementById("start-img"))
         }, 1111)
     )
 })
@@ -242,7 +242,7 @@ $( window ).resize(function() {
 
 setting.addEventListener('change',function(e) {
     $("<style id='style-span-set'> #span-set:after { opacity: 0; }#span-set:before { opacity: 0; } </style>").appendTo($("head"));
-    setTimeout(function() {document.getElementById("style-span-set").remove();}, 400);
+    setTimeout(function() {document.head.removeChild(document.getElementById("style-span-set"));}, 400);
 });
 
 addImg("lotto", document.getElementById("numbers"), "img0", "check-img-del", "img/v.png", 0, 0);
