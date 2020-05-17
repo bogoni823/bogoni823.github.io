@@ -26,8 +26,8 @@ function addImg(game, object_, id_, class_, src_, x, y) {
     img.style.position = "absolute";
     img.style.left = x+"px";
     img.style.top = y+"px";
-    if(game == "bingo" && size != 5 && size == 3 || size == 4 || size == 10) {
-        var percent = (size == 3 ? "33.5%" : (size == 4 ? "25.2%" : "9.85%"));
+    if(game == "bingo" && size != 5 && size == 3 || size == 4 || size == 8 || size == 10) {
+        var percent = (size < 5 ? (size == 3 ? "33.5%" : "25.2%") : (size == 8 ? "12.5%" : "9.85%"));
         img.style.width = percent;
         img.style.height = percent;
     }

@@ -17,7 +17,8 @@ var edit_id = false;
 var edit_value=false;
 var img_flag = false;
 var local_flag = false;
-var dblclick_flag = false;
+var bingo8_flag = false;
+var bingo10_flag = false;
 const page_name = "index.html";
 
 toastr.options = {
@@ -123,6 +124,7 @@ function stBtn() {
   dup_input.disabled="disabled";
   $(".slider").css("cursor", "default");
   for(var i=3; i<=5; i++) document.getElementById("blank"+i).disabled="disabled";
+  document.getElementById("blank8").disabled="disabled";
   document.getElementById("blank10").disabled="disabled";
   $(".blanks input[type='radio'] + span").css("cursor", "default");
   startImg();
@@ -192,6 +194,10 @@ function sizeChange(size) {
     arr_x = new Array(2,166,330);
     arr_y = new Array(56,220,384);
   }
+  else if(size == 8) { // 사이즈 변경;
+    arr_x = new Array(2,63,125,187,249,311,373,434);
+    arr_y = new Array(55.5,116,178,240,302,364,426,487);
+  }
   else if(size == 10) {
     arr_x = new Array(3,52,101,150,199,248,298,348,397.75, 447.25);
     arr_y = new Array(56.2,105,154,203,252,301,350.5,400.25,450.8,500.25);
@@ -237,9 +243,13 @@ function randFunc() {
   return String(Math.floor(Math.random() * 100) + 1);
 }
 function randBtn() {
-  if(!dblclick_flag) {
-    dblclick_flag = true;
-    $("<style id='style-span-10'>#span-10:hover:after{ width:176px;left:33px;content:'클릭하면 빙고판을 초기화합니다'; }</style>").appendTo($("head"));
+  if(!bingo8_flag) {
+    bingo8_flag = true;
+    $("<style id='style-span-8'>#span-8:hover:after{ width:176px;left:-35px;content:'클릭하면 빙고판을 초기화합니다'; }</style>").appendTo($("head"));
+  }
+  if(!bingo10_flag) {
+    bingo10_flag = true;
+    $("<style id='style-span-10'>#span-10:hover:after{ width:176px;left:-35px;content:'클릭하면 빙고판을 초기화합니다'; }</style>").appendTo($("head"));
   }
   for(var i=0; i<size*size; i++) {
     arr[i] = randFunc();
@@ -314,14 +324,34 @@ $(".blanks input").click(function() {
   if(size != value) {
     editTable(value);
   }
-  if(size == 10) {
-    dblclick_flag = !dblclick_flag;
-    if(dblclick_flag) {
-      $("<style id='style-span-10'>#span-10:hover:after{ width:176px;left:33px;content:'클릭하면 빙고판을 초기화합니다'; }</style>").appendTo($("head"));
+  if(size == 8) {
+    bingo8_flag = !bingo8_flag;
+    if(bingo8_flag) {
+      $("<style id='style-span-8'>#span-8:hover:after{ width:176px;left:-35px;content:'클릭하면 빙고판을 초기화합니다'; }</style>").appendTo($("head"));
+      for(var i=0; i<size*size; i++) arr[i] = String(i+1);
+    }
+    else {
+      if(document.getElementById("style-span-8")) document.head.removeChild(document.getElementById("style-span-8"));
+      if(bingo10_flag) {
+        bingo10_flag = false;
+        document.head.removeChild(document.getElementById("style-span-10"));
+      }
+      for(var i=0; i<size*size; i++) arr[i] = "";
+    }
+    viewNumFunc();
+  }
+  else if(size == 10) {
+    bingo10_flag = !bingo10_flag;
+    if(bingo10_flag) {
+      $("<style id='style-span-10'>#span-10:hover:after{ width:176px;left:-35px;content:'클릭하면 빙고판을 초기화합니다'; }</style>").appendTo($("head"));
       for(var i=0; i<size*size; i++) arr[i] = String(i+1);
     }
     else {
       if(document.getElementById("style-span-10")) document.head.removeChild(document.getElementById("style-span-10"));
+      if(bingo8_flag) {
+        bingo8_flag = false;
+        document.head.removeChild(document.getElementById("style-span-8"));
+      }
       for(var i=0; i<size*size; i++) arr[i] = "";
     }
     viewNumFunc();

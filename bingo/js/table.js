@@ -15,9 +15,14 @@ function makeTable() {
     tbody.appendChild(tr[j]);
   }
   if(document.getElementById("bingo-number10")) document.head.removeChild(document.getElementById("bingo-number10"));
+  if(document.getElementById("bingo-number8")) document.head.removeChild(document.getElementById("bingo-number8"));
   if(size == 5) tbody.style.height = "99px";
   else if(size == 4) tbody.style.height = "124px";
   else if(size == 3) tbody.style.height = "165px";
+  else if(size == 8) {
+    tbody.style.fontSize = "18px";
+    $("<style id='bingo-number8'> .bingo-table td { min-height:58px; } .bingo-number { min-height:28px; } </style>").appendTo($("head"));
+  }
   else if(size == 10) {
     tbody.style.fontSize = "16px";
     $("<style id='bingo-number10'> .bingo-table td { min-height:45.5px; } .bingo-number { min-height:25px; } </style>").appendTo($("head"));

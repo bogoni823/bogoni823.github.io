@@ -111,6 +111,7 @@ h3 {
 }
 .blanks input[type="radio"] + span {
   display: inline-block;
+  position: relative;
   background: none;
   border: 2px solid #dfdfdf;    
   padding: 0px 8px;
@@ -121,29 +122,34 @@ h3 {
   cursor: pointer;
 }
 .blanks input[type="radio"]:checked + span {
+  z-index: 1;
   border: 3px solid skyblue;
   background: skyblue;
   color: #fff;
 }
 #blank3 + span {
-  position: relative;
   left: 8px;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
 }
 #blank5 + span {
-  position: relative;
   right: 8px;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
-#blank10 + span {
-  position:relative;
+#blank8 + span {
   top: 8px;
-
-//  margin: 5px;
-  border-radius: 20px;
-  width: 250px;
+  left: 4px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  width: 115px;
+}
+#blank10 + span {
+  top: 8px;
+  right: 4px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  width: 115px;
 }
 #button-group2 {
   width: 40%;
@@ -329,15 +335,27 @@ h3 {
   left: -107px;
   width: 152px;
 }
+#span-8:hover:after {
+  top: 44px;
+  left: -17px;
+  padding: 4px 12px;
+  font-weight: bold;
+  line-height: 20px;
+  content: "클릭하면 1~64의 정렬된 숫자를 생성합니다";
+}
+#span-8:hover:before {
+  top: 34px;
+  left: 70px;
+}
 #span-10:hover:after {
   top: 44px;
-  right: -2.25px;
-  left: -2.25px;
-  padding: 0px 12px;
+  left: -17px;
+  padding: 4px 12px;
   font-weight: bold;
+  line-height: 20px;
   content: "클릭하면 1~100의 정렬된 숫자를 생성합니다";
 }
 #span-10:hover:before {
   top: 34px;
-  left: 138px;
+  left: 70px;
 }
