@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
   <meta name="author" content="고니랑용주랑">
-  <meta name="description" content="보고니 배그 배틀그라운드 게임 미션 빙고 아프리카티비 아프리카TV '보고니 빙고' '보고니 미션' '보고니 게임' '보고니 배그' '배그 보고니' '배그 빙고미션' '배그 빙고' '배틀그라운드 빙고' '배틀그라운드 빙고판'">
-  <title>보고니|빙고</title>
+  <meta name="description" content="보고니 배그 보고니 배틀그라운드 보고니 게임 보고니 미션 보고니 빙고 미션 보고니 아프리카티비 보고니 아프리카TV 배틀그라운드 미션 배틀그라운드 빙고 미션 배틀그라운드 빙고판 배그 미션 배그 빙고 미션 배그 빙고판 배틀그라운드 게임 배그 게임 '보고니 빙고' '보고니 미션' '보고니 게임' '보고니 배그' '배그 보고니' '배그 빙고미션' '배그 빙고' '배틀그라운드 빙고' '배틀그라운드 빙고판'">
+  <title>보고니 | 빙고</title>
   <link rel="shortcut icon" href="https://res.afreecatv.com/afreeca.ico">
   <link rel="icon" href="https://res.afreecatv.com/afreeca.ico">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap">
@@ -26,41 +26,32 @@
   <center>
     <div id="buttons">
       <div id="button-group1" class="blanks">
-        <div id="button-group1-top">
-          <label>
-            <input type="radio" name="group" id="blank3" value=3> <span>3×3</span>
-          </label>
-          <label>
-            <input type="radio" name="group" id="blank4" value=4> <span>4×4</span>
-          </label>
-          <label>
-            <input type="radio" name="group" id="blank5" value=5 checked="checked"> <span>5×5</span>
-          </label>
-        </div>
-        <div id="button-group1-bottom">
-          <label>
-            <input type="radio" name="group" id="blank8" value=8> <span id="span-8" class="rand-tooltip" data-tooltip-text>8×8</span>
-          </label>
-          <label>
-            <input type="radio" name="group" id="blank10" value=10> <span id="span-10" class="rand-tooltip" data-tooltip-text>10×10</span>
-          </label>
-        </div>
+        <label class="label-bingo-size">빙고 크기</label>
+        <button id="minus-button" class="plus-minus"> - </button>
+        <input type="text" id="amount" value="5" size="6" onkeypress="inNumber();" onkeydown="inRudder();" maxlength="2" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" style="ime-mode:disabled">
+        <button id="plus-button" class="plus-minus"> + </button>
       </div>
       <div id="button-group2">
 	    <div class="duplicate">
 	      <label class="label1">번호중복</label>
-          <span id="span-dup" class="rand-tooltip" data-tooltip-text>
+          <span id="span-dup" class="span-triangle" data-tooltip-text>
             <label class="switch">
               <input type="checkbox" id="checkbox">
               <span class="slider"></span>
             </label>
           </span>
         </div>
-        <div id="random">
-          <label class="label2">번호생성</label>
-          <span id="span-rand" class="rand-tooltip" data-tooltip-text>
-            <button id="random-button">랜 덤</button>
+		<div>
+        <span id="random">
+          <span id="span-rand" class="span-triangle" data-tooltip-text>
+            <button id="random-button">번호랜덤</button>
           </span>
+        </span>
+        <span id="delete">
+          <span id="span-del" class="span-triangle" data-tooltip-text>
+            <button id="delete-button">번호삭제</button>
+          </span>
+        </span>
         </div>
       </div>
     </div>
@@ -80,7 +71,7 @@
     <div id="setting" class="setting">
       <input id="toggle" type="checkbox">
       <label for="toggle" class="setting label">
-        <span id="span-set" data-tooltip-text="설정">
+        <span id="span-set" class="span-triangle" data-tooltip-text>
           <img id="set-img" src="../img/set.png">
         </span>
       </label>
@@ -88,7 +79,7 @@
         <div id="buttons-img-share">
           <div class="buttons-img">
             <div class="input-file">
-			<span id="span-img" class="span-no-triangle" data-tooltip-text>
+			<span id="span-img" data-tooltip-text>
               <label for="file_input" class="file-label">
                 이미지 변경
               </label>
@@ -96,7 +87,7 @@
               <input type="file" name="" id="file_input" class="file-input">
             </div>
 		  </div>
-          <span id="span-share" class="span-no-triangle" data-tooltip-text>
+          <span id="span-share" data-tooltip-text>
             <button id="share-button">공유하기</button>
           </span>
         </div>

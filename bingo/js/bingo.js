@@ -2,23 +2,31 @@ var st_btn = document.getElementById("game-start");
 st_btn.addEventListener("click", stBtn);
 var rand_btn = document.getElementById("random-button");
 rand_btn.addEventListener("click", randBtn);
+var del_btn = document.getElementById("delete-button");
+del_btn.addEventListener("click", delBtn);
 var share_btn = document.getElementById("share-button");
 share_btn.addEventListener("click", shareBtn);
+var plus_btn = document.getElementById("plus-button");
+plus_btn.addEventListener("click", plusBtn);
+var minus_btn = document.getElementById("minus-button");
+minus_btn.addEventListener("click", minusBtn);
 var file_input = document.getElementById("file_input");
 var set_btn = document.getElementById("toggle");
 var dup_input = document.getElementById("checkbox");
+var amount_input = document.getElementById("amount");
+var max_size = 100;
 var arr = new Array(size*size);
 var arr_flag = new Array(size*size);
 for(var i=0; i<size*size; i++) arr_flag[i] = false;
+var arr_rand = new Array(max_size);
+for( var i=0; i<max_size; i++) arr_rand[i] = i+1;
 var arr_x = new Array(3,101,200,299,397);
 var arr_y = new Array(56,154,253,352,450);
 var dup_check = true;
 var edit_id = false;
-var edit_value=false;
+var edit_value = false;
 var img_flag = false;
 var local_flag = false;
-var bingo8_flag = false;
-var bingo10_flag = false;
 const page_name = "index.html";
 
 toastr.options = {
@@ -49,10 +57,7 @@ if(url_para.length) {
     var param_dup = getDupURL(arr_url_para[1]);
     var param_arr = getArrayURL(decodeURI(arr_url_para[2]), param_size*param_size, 3);
 
-    if(param_size != size) {
-      document.getElementById("blank"+size).checked = false;
-      document.getElementById("blank"+param_size).checked = true;
-    }
+    document.getElementById("amount").value = param_size;
     editTable(param_size);
 
     if(param_dup+"" == dup_check+"") {
@@ -95,6 +100,7 @@ function initArray(size) {
 }
 function bingoCnt() {
   var bingo = 0;
+  if(size == 1) return 0;
   var c1cnt = 0;
   var c2cnt = 0;
   for(var i=0; i<size; i++) {
@@ -115,17 +121,20 @@ function bingoCnt() {
 }
 function scoring() {
   bingo = bingoCnt();
-  document.getElementById("score").innerHTML="<font color='red'>"+bingo+"</font>줄 ┃ <font color='red'>"+count+"</font>개";
+  if(size != 1) document.getElementById("score").innerHTML="<font color='red'>"+bingo+"</font>줄 ┃ <font color='red'>"+count+"</font>개";
+  else document.getElementById("score").innerHTML="<font color='red'>"+count+"</font>개";
 }
 function stBtn() {
   $("#game-start").hide();
-  rand_btn.disabled="disabled";
+  rand_btn.disabled = "disabled";
   rand_btn.style.cursor = "default";
-  dup_input.disabled="disabled";
+  del_btn.disabled = "disabled";
+  del_btn.style.cursor = "default";
+  minus_btn.disabled = "disabled";
+  plus_btn.disabled = "disabled";
+  dup_input.disabled = "disabled";
+  amount_input.disabled = "disabled";
   $(".slider").css("cursor", "default");
-  for(var i=3; i<=5; i++) document.getElementById("blank"+i).disabled="disabled";
-  document.getElementById("blank8").disabled="disabled";
-  document.getElementById("blank10").disabled="disabled";
   $(".blanks input[type='radio'] + span").css("cursor", "default");
   startImg();
   setTimeout(function() {
@@ -133,7 +142,7 @@ function stBtn() {
   }, 1111);
   for(var i=1; i<=size*size; i++) {
     var num = document.getElementById(i);
-    if(String(arr[i-1]).length < 4 && arr[i-1].length) {
+    if(String(arr[i-1]).length < 4 && String(arr[i-1]).length) {
       var td = document.getElementById("td"+i);
       num.style.cursor = "pointer";
       td.style.cursor = "pointer";
@@ -194,13 +203,33 @@ function sizeChange(size) {
     arr_x = new Array(2,166,330);
     arr_y = new Array(56,220,384);
   }
-  else if(size == 8) { // 사이즈 변경;
-    arr_x = new Array(2,63,125,187,249,311,373,434);
-    arr_y = new Array(55.5,116,178,240,302,364,426,487);
-  }
   else if(size == 10) {
     arr_x = new Array(3,52,101,150,199,248,298,348,397.75, 447.25);
     arr_y = new Array(56.2,105,154,203,252,301,350.5,400.25,450.8,500.25);
+  }
+  else if(size == 8) {
+    arr_x = new Array(2,63,125,187,249,311,373,434);
+    arr_y = new Array(55.5,116,178,240,302,364,426,487);
+  }
+  else if(size == 2) {
+    arr_x = new Array(2,249);
+    arr_y = new Array(56,303);
+  }
+  else if(size == 1) {
+    arr_x = new Array(2, 0);
+    arr_y = new Array(56, 0);
+  }
+  else if(size == 6) {
+    arr_x = new Array(2,84,166,248,330.5,413);
+    arr_y = new Array(55.5,137,219,301,383.5,466);
+  }
+  else if(size == 7) {
+    arr_x = new Array(2,72,142,212.5,283,354,425);
+    arr_y = new Array(55.5,125,195,265.5,336,407,478);
+  }
+  else if(size == 9) {
+    arr_x = new Array(3,57,112,167,222,277,332,387,442);
+    arr_y = new Array(56.2,110,165,220,275,330,385,440,495);
   }
   else {
     alert("Size Error");
@@ -242,20 +271,57 @@ function dupFunc(flag) {
 function randFunc() {
   return String(Math.floor(Math.random() * 100) + 1);
 }
+function randFuncIdx(len) {
+  return Math.floor(Math.random() * len);
+}
 function randBtn() {
-  if(!bingo8_flag) {
-    bingo8_flag = true;
-    $("<style id='style-span-8'>#span-8:hover:after{ width:176px;left:-35px;content:'클릭하면 빙고판을 초기화합니다'; }</style>").appendTo($("head"));
+  if(dup_check) {
+    try {
+      for(var i=0; i<size*size; i++) {
+        var temp_idx = randFuncIdx(max_size - i);
+        var temp_val = arr_rand[max_size - i-1];
+        arr_rand[max_size-i-1] = arr_rand[temp_idx];
+        arr_rand[temp_idx] = temp_val;
+        arr[i] = arr_rand[max_size-i-1];
+      }
+    }
+    catch(e) {
+      arr_rand.length = 0;
+      arr_rand = new Array(max_size);
+      for(var i=0; i<max_size; i++) arr_rand[i] = i+1;
+    }
   }
-  if(!bingo10_flag) {
-    bingo10_flag = true;
-    $("<style id='style-span-10'>#span-10:hover:after{ width:176px;left:-35px;content:'클릭하면 빙고판을 초기화합니다'; }</style>").appendTo($("head"));
+  else {
+    for(var i=0; i<size*size; i++) arr[i] = randFunc();
   }
-  for(var i=0; i<size*size; i++) {
-    arr[i] = randFunc();
-    viewNumFunc();
+  viewNumFunc();
+}
+function delBtn() {
+  for(var i=0; i<size*size; i++) arr[i] = "";
+  viewNumFunc();
+}
+function inRudder() {
+  if(!minus_btn.disabled && (event.keyCode == 37 || event.keyCode == 40)) minusBtn();
+  else if(!plus_btn.disabled && (event.keyCode == 39 || event.keyCode == 38)) plusBtn();
+}
+function inNumber() {
+  if(event.keyCode < 48 || event.keyCode > 57) {
+    event.returnValue = false;
   }
-  if(dup_check) dupFunc("add");
+}
+function plusBtn() {
+  if(minus_btn.disabled) minus_btn.disabled = false;
+  if(size == 9) plus_btn.disabled = "disabled";
+  size++;
+  amount_input.value = size;
+  editTable(amount_input.value);
+}
+function minusBtn() {
+  if(plus_btn.disabled) plus_btn.disabled = false;
+  if(size == 2) minus_btn.disabled = "disabled";
+  size--;
+  amount_input.value = size;
+  editTable(amount_input.value);
 }
 dup_input.addEventListener('change',function(e) {
   dup_check = $("input:checkbox[id='checkbox']").is(":checked") == false;
@@ -318,44 +384,25 @@ function editTable(new_size) {
   initArray(new_size);
   sizeChange(new_size);
   makeTable();
+  for(var i=0; i<new_size*new_size; i++) arr[i] = i+1;
+  viewNumFunc();
 }
-$(".blanks input").click(function() {
-  var value = $(this).attr("value");
-  if(size != value) {
-    editTable(value);
+amount_input.addEventListener('input',function(e) {
+  if(this.value >= 1 && this.value <= 10) {
+    if(this.value == 10) plus_btn.disabled = "disabled";
+    else if(this.value == 1) minus_btn.disabled = "disabled";
+    if(this.value != 1 && minus_btn.disabled) minus_btn.disabled = false;
+    else if(this.value != 10 && plus_btn.disabled) plus_btn.disabled = false;
   }
-  if(size == 8) {
-    bingo8_flag = !bingo8_flag;
-    if(bingo8_flag) {
-      $("<style id='style-span-8'>#span-8:hover:after{ width:176px;left:-35px;content:'클릭하면 빙고판을 초기화합니다'; }</style>").appendTo($("head"));
-      for(var i=0; i<size*size; i++) arr[i] = String(i+1);
-    }
-    else {
-      if(document.getElementById("style-span-8")) document.head.removeChild(document.getElementById("style-span-8"));
-      if(bingo10_flag) {
-        bingo10_flag = false;
-        document.head.removeChild(document.getElementById("style-span-10"));
-      }
-      for(var i=0; i<size*size; i++) arr[i] = "";
-    }
-    viewNumFunc();
+  else {
+    if(this.value != "") this.value = size;
+    return;
   }
-  else if(size == 10) {
-    bingo10_flag = !bingo10_flag;
-    if(bingo10_flag) {
-      $("<style id='style-span-10'>#span-10:hover:after{ width:176px;left:-35px;content:'클릭하면 빙고판을 초기화합니다'; }</style>").appendTo($("head"));
-      for(var i=0; i<size*size; i++) arr[i] = String(i+1);
-    }
-    else {
-      if(document.getElementById("style-span-10")) document.head.removeChild(document.getElementById("style-span-10"));
-      if(bingo8_flag) {
-        bingo8_flag = false;
-        document.head.removeChild(document.getElementById("style-span-8"));
-      }
-      for(var i=0; i<size*size; i++) arr[i] = "";
-    }
-    viewNumFunc();
-  }
+  size = Number(this.value);
+  editTable(this.value);
+});
+$(document).on("blur", "#amount", function() {
+  if(amount_input.value == "") amount_input.value = size;
 });
 function setArray(in_arr) {
   arr.length = 0;

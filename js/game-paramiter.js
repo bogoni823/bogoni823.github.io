@@ -8,7 +8,7 @@ function reloadPage() {
   stat_flag = false;
 }
 function getSizeURL(in_size) {
-  if(in_size === '3' || in_size === '4' || in_size === '5' || in_size === '8' || in_size === '10') return in_size;
+  if(Number(in_size) >= 1 && Number(in_size) <= 10) return in_size;
   reloadPage();
 }
 function getDupURL(in_flag) {

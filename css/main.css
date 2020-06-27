@@ -41,3 +41,13 @@ body {
 #span-green:hover:after {
   left: 25%;
 }
+footer {
+  width: 99%;
+  position: relative;
+  bottom: 0px;
+  margin: 180px 0 0 0;
+  color: #666;
+  font-size: 12px;
+  font-family: tahoma;
+  text-align: center;
+}

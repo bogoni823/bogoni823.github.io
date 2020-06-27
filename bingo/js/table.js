@@ -9,24 +9,26 @@ function makeTable() {
     for(var i=0; i<size; i++) {
       td[j*size+i] = document.createElement("td");
       td[j*size+i].setAttribute("id", "td"+(j*size+i+1));
-      td[j*size+i].innerHTML = "<div id='"+ (j*size+i+1) +"' class='bingo-number'></div>";
+      td[j*size+i].innerHTML = "<div id='"+ (j*size+i+1) +"' class='bingo-number' contenteditable='true'></div>";
       tr[j].appendChild(td[j*size+i]);
     }
     tbody.appendChild(tr[j]);
   }
-  if(document.getElementById("bingo-number10")) document.head.removeChild(document.getElementById("bingo-number10"));
-  if(document.getElementById("bingo-number8")) document.head.removeChild(document.getElementById("bingo-number8"));
-  if(size == 5) tbody.style.height = "99px";
-  else if(size == 4) tbody.style.height = "124px";
-  else if(size == 3) tbody.style.height = "165px";
-  else if(size == 8) {
-    tbody.style.fontSize = "18px";
-    $("<style id='bingo-number8'> .bingo-table td { min-height:58px; } .bingo-number { min-height:28px; } </style>").appendTo($("head"));
+
+  var style_bingo = document.getElementsByClassName("bingo-class");
+  for( var i=0; i < style_bingo.length; i++ ) {
+    document.head.removeChild(document.getElementById(style_bingo.item(i).id));
   }
-  else if(size == 10) {
-    tbody.style.fontSize = "16px";
-    $("<style id='bingo-number10'> .bingo-table td { min-height:45.5px; } .bingo-number { min-height:25px; } </style>").appendTo($("head"));
+
+  var size_font = [80, 60, 38, 36, 35, 28, 23, 18, 17, 16];
+  var size_height = [494, 247, 165, 124, 99, 78.5, 67, 58, 51, 45.5];
+  var size_height2 = [123, 92, 54, 54, 54, 43, 35, 28, 26, 25];
+  tbody.style.fontSize = size_font[size-1]+"px";
+  if(size <= 5) {
+    tbody.style.height = size_height[size-1]+"px";
+  }
+  else {
+    $("<style id='bingo-number" + size +"' class='bingo-class'> .bingo-table td { min-height:" + size_height[size-1] + "px; } .bingo-number { min-height:" + size_height2[size-1] + "px; } </style>").appendTo($("head"));
   }
   $(".bingo-table").append(tbody);
-  for(var i=1; i<=size*size; i++) $("#"+i).attr("contenteditable", true);
 }

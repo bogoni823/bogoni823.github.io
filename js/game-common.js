@@ -26,10 +26,10 @@ function addImg(game, object_, id_, class_, src_, x, y) {
     img.style.position = "absolute";
     img.style.left = x+"px";
     img.style.top = y+"px";
-    if(game == "bingo" && size != 5 && size == 3 || size == 4 || size == 8 || size == 10) {
-        var percent = (size < 5 ? (size == 3 ? "33.5%" : "25.2%") : (size == 8 ? "12.5%" : "9.85%"));
-        img.style.width = percent;
-        img.style.height = percent;
+    if(game == "bingo" && size != 5 && (size >= 1 && size <= 10)) {
+        var percent = ["500px", "250px", "33.5%", "25.2%", 0, "84px", "72px", "12.5%", "11%", "9.85%"];
+        img.style.width = percent[size-1];
+        img.style.height = percent[size-1];
     }
     object_.append(img);
 }
