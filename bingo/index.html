@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../css/toastr.min.css">
   <link rel="stylesheet" href="../css/tooltip.css">
   <link rel="stylesheet" href="../css/setting.css">
+  <link rel="stylesheet" href="../css/notice.css">
   <link rel="stylesheet" href="css/switch.css">
   <link rel="stylesheet" href="css/bingo.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -23,79 +24,147 @@
   </script>
 </head>
 <body>
-  <center>
-    <div id="buttons">
-      <div id="button-group1" class="blanks">
-        <label class="label-bingo-size">빙고 크기</label>
-        <button id="minus-button" class="plus-minus"> - </button>
-        <input type="text" id="amount" value="5" size="6" onkeypress="inNumber();" onkeydown="inRudder();" maxlength="2" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" style="ime-mode:disabled">
-        <button id="plus-button" class="plus-minus"> + </button>
+  <div id="buttons">
+    <div id="button-group1" class="blanks">
+      <label class="label-bingo-size">빙고 크기</label>
+      <button id="minus-button" class="plus-minus"> - </button>
+      <input type="text" id="amount" value="5" size="6" onkeypress="inNumber();" onkeydown="inRudder();" maxlength="2" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" style="ime-mode:disabled">
+      <button id="plus-button" class="plus-minus"> + </button>
+    </div>
+    <div id="button-group2">
+      <div class="duplicate">
+        <label class="label1">번호중복</label>
+        <span id="span-dup" class="span-triangle" data-tooltip-text>
+          <label class="switch">
+            <input type="checkbox" id="checkbox">
+            <span class="slider"></span>
+          </label>
+        </span>
       </div>
-      <div id="button-group2">
-	    <div class="duplicate">
-	      <label class="label1">번호중복</label>
-          <span id="span-dup" class="span-triangle" data-tooltip-text>
-            <label class="switch">
-              <input type="checkbox" id="checkbox">
-              <span class="slider"></span>
-            </label>
-          </span>
-        </div>
-		<div>
-        <span id="random">
-          <span id="span-rand" class="span-triangle" data-tooltip-text>
-            <button id="random-button">번호랜덤</button>
-          </span>
+      <div>
+      <span id="random">
+        <span id="span-rand" class="span-triangle" data-tooltip-text>
+          <button id="random-button">번호랜덤</button>
         </span>
-        <span id="delete">
-          <span id="span-del" class="span-triangle" data-tooltip-text>
-            <button id="delete-button">번호삭제</button>
-          </span>
+      </span>
+      <span id="delete">
+        <span id="span-del" class="span-triangle" data-tooltip-text>
+          <button id="delete-button">번호삭제</button>
         </span>
-        </div>
+      </span>
       </div>
     </div>
-    <div id="bingo-start">
-      <div class="bingo">
-        <table class="bingo-table">
-          <thead>
-		    <h3 id="title"><a id="chrome-link" href="https://support.google.com/chrome/answer/95417?co=GENIE.Platform%3DDesktop&hl=ko">Chrome 사용 권장</a></h1>
-          </thead>
-        </table>
-		<img id="start-img" src="../img/start.png">
-      </div>
-      <br>
-      <button id="game-start" class="game-start">Game Start!</button>
-	  <div id="score"></div>
+  </div>
+  <br>
+  <div id="bingo-start">
+    <div class="bingo">
+      <table class="bingo-table">
+        <thead>
+          <h3 id="title"><a id="chrome-link" href="https://support.google.com/chrome/answer/95417?co=GENIE.Platform%3DDesktop&hl=ko">Chrome 사용 권장</a></h1>
+        </thead>
+      </table>
+      <img id="start-img" src="../img/start.png">
     </div>
-    <div id="setting" class="setting">
-      <input id="toggle" type="checkbox">
-      <label for="toggle" class="setting label">
-        <span id="span-set" class="span-triangle" data-tooltip-text>
-          <img id="set-img" src="../img/set.png">
-        </span>
-      </label>
-      <div class="slide-menu">
-        <div id="buttons-img-share">
-          <div class="buttons-img">
-            <div class="input-file">
-			<span id="span-img" data-tooltip-text>
-              <label for="file_input" class="file-label">
-                이미지 변경
-              </label>
-			  </span>
-              <input type="file" name="" id="file_input" class="file-input">
+    <br>
+    <button id="game-start" class="game-start">Game Start!</button>
+	<div id="score"></div>
+  </div>
+
+
+  <div class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="modal-close-x">×</button>
+        <h4 class="modal-title">기능 활용 Tip!</h4>
+      </div>
+      <div class="modal-body">
+
+
+        <div id="slider-wrap">
+          <ul id="slider">
+            <li>
+              <div>
+                <h3>특별한 표시</h3>
+                <span>현상금, 목표물을 표시하려면 <span>마우스 휠</span> 클릭!</span>
+              </div>
+              <span class="banner-img banner1"></span>
+            </li>
+
+            <li>
+              <div>
+                <h3>친구에게 공유</h3>
+                <span>내가 만든 빙고판을 <span>공유하기</span>를 통해 친구들과 공유하기!</span>
+              </div>
+              <span class="banner-img banner2"></span>
+            </li>
+      
+            <li>
+              <div>
+                <h3>배경 지우기</h3>
+                <span>이미지를 지우고 싶을땐 <span>이미지가 아닌 파일</span>을 열기!</span>
+              </div>
+              <span class="banner-img banner3"></span>
+            </li>
+          </ul>
+      
+          <div class="slider-btns" id="next"><span>▶</span></div>
+          <div class="slider-btns" id="previous"><span>◀</span></div>
+      
+          <div id="slider-pagination-wrap">
+            <ul>
+            </ul>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <div id="popup-timer"></div>
+        <label class="modal-popup">
+          <input id="popup-7days" type="checkbox" value=false> 일주일동안 이 창을 열지 않음
+        </label>
+        <button class="modal-close-btn">닫기</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="right-tab" class="right-tab">
+    <div class="tab-icons">
+      <div id="setting" class="setting">
+        <input id="toggle" type="checkbox">
+        <label for="toggle" class="setting label">
+          <span id="span-set" class="span-triangle" data-tooltip-text>
+            <div id="set-img" class="img-icon"></div>
+          </span>
+        </label>
+        <div class="slide-menu">
+          <div id="buttons-img-share">
+            <div class="buttons-img">
+              <div class="input-file">
+                <span id="span-img" data-tooltip-text>
+                  <label for="file_input" class="file-label">이미지 변경</label>
+                </span>
+                <input type="file" name="" id="file_input" class="file-input">
+              </div>
             </div>
-		  </div>
-          <span id="span-share" data-tooltip-text>
-            <button id="share-button">공유하기</button>
-          </span>
+            <span id="span-share" data-tooltip-text>
+              <button id="share-button">공유하기</button>
+            </span>
+          </div>
         </div>
       </div>
     </div>
-  </center>
+    <div class="tab-icons">
+      <span id="span-notice" class="span-triangle" data-tooltip-text>
+        <div id="notice" class="notice-icon img-icon modal-open-btn"></div>
+      </span>
+    </div>
+  </div>
   <script src="../js/game-common.js"></script>
   <script src="../js/game-paramiter.js"></script>
+  <script src="../js/notice.js"></script>
   <script src="js/table.js"></script>
   <script src="js/bingo.js"></script>
 </body>

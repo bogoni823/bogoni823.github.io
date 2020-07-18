@@ -179,6 +179,7 @@ body, div, button, h1 {
 .check-img {
     width: 80px;
     height: 80px;
+    background:url("../img/v.png") no-repeat;
     cursor: pointer;
     opacity: 0.92
 }
@@ -219,6 +220,7 @@ body, div, button, h1 {
 
 .slide-menu {
    width: 260px;
+   text-align: center;
 }
 
 #share-button {
@@ -241,22 +243,27 @@ body, div, button, h1 {
     background-color: #FF760E;
 }
 
+.img-icon {
+    background:url("../../img/img_icon.png") no-repeat;
+}
+
 [data-tooltip-text]:hover:after {
+    content: "설정";
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
     font-weight: bold;
     text-align: center;
     min-width: 46px;
     font-size: 12px;
     padding: 2px 8px;
-    top: 19px;
-    left: -25%;
+    top: 45px;
+    left: -7px;
 }
 
 #span-set:hover:before {
     content: "";
     position: absolute;
-    top: 57%;
-    left: 70%;
+    top: 36px;
+    left: 21px;
     margin-left: -10px;
     border-width: 5px;
     border-style: solid;

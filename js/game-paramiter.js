@@ -23,6 +23,12 @@ function getArrayURL(in_arr, in_size, in_length) {
   }
   reloadPage();
 }
+function getStarURL(in_str, in_size) {
+  var quo = parseInt(in_size*in_size/4);
+  var rem = in_size*in_size%4;
+  if(in_str.length<=25 && ((rem==0 && quo >= in_str.length) || (rem && quo+1 >= in_str.length))) return in_str;
+  reloadPage();
+}
 function copy(val) {
   var dummy = document.createElement("textarea");
   dummy.style.position = "absolute";

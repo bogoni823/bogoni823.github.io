@@ -1,0 +1,250 @@
+/* modal css starting point */
+.modal-open {
+    overflow: hidden;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    visibility: hidden;
+    opacity: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 999;
+    -webkit-transition: all 0.35s linear;
+    -o-transition: all 0.35s linear;
+    transition: all 0.35s linear;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+//    width: 750px;
+    width: 650px;
+    margin: 0 auto;
+    border-radius: 6px;
+    -webkit-transition: all 0.35s linear;
+    -o-transition: all 0.35s linear;
+    transition: all 0.35s linear;
+}
+
+.modal-header {
+    min-height: 16px;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-header>.modal-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.modal-header>.modal-close-x {
+    margin-top: -2px;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .2;
+    color: #000;
+}
+
+.modal-body {
+    position: relative;
+    padding: 15px;
+}
+
+.modal-footer {
+    padding: 2px 15px 15px 15px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+
+.modal-footer>.modal-close-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+}
+
+.modal-footer>.modal-close-btn:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+    text-decoration: none;
+}
+
+.modal-active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-active .modal-content {
+    margin: 9% auto; /* 10 -> 8 */
+//    margin: 5% auto;
+}
+/* modal css end point */
+
+/* carousel css starting point */
+#slider-wrap {
+    position: relative;
+    width: 100%;
+    height: 435px; /* 400 -> 435*/
+    overflow: hidden;
+}
+
+#slider-wrap ul#slider {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding: 0;
+}
+
+#slider-wrap ul#slider li {
+    float: left;
+    position: relative;
+    width: 600px;
+    height: 400px; /* 400 -> 600 */
+}
+
+#slider-wrap ul#slider li>div {
+    position: absolute;
+}
+
+#slider-wrap ul#slider li>div h3 {
+    position: relative;
+    top: -43px;
+    font-size: 36px;
+    text-transform: uppercase;
+}
+
+#slider-wrap ul#slider li>div span {
+    position: relative;
+    top: -55px;
+    font-size: 21px;
+}
+
+#slider-wrap ul#slider li img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/*btns*/
+.slider-btns {
+    position: absolute;
+    width: 50px;
+    height: 60px;
+    top: 50%;
+    margin-top: -25px;
+    line-height: 57px;
+    text-align: center;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
+    -webkit-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    transition: all 0.1s ease;
+}
+
+.slider-btns:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+#next {
+    right: -50px;
+    border-radius: 7px 0px 0px 7px;
+    color: #eee;
+}
+
+#previous {
+    left: -50px;
+    border-radius: 0px 7px 7px 7px;
+    color: #eee;
+}
+
+#slider-wrap.active #next {
+    right: 0px;
+}
+
+#slider-wrap.active #previous {
+    left: 0px;
+}
+
+/*bar*/
+#slider-pagination-wrap {
+    min-width: 20px;
+    margin-top: 385px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 15px;
+    position: relative;
+    text-align: center;
+}
+
+#slider-pagination-wrap ul {
+    width: 100%;
+    padding: 0;
+}
+
+#slider-pagination-wrap ul li {
+    margin: 0 4px;
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #000;
+    opacity: 0.5;
+    position: relative;
+    top: 0;
+}
+
+#slider-pagination-wrap ul li.active {
+    width: 12px;
+    height: 12px;
+    top: 3px;
+    opacity: 1;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 0px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 0px;
+}
+
+/*ANIMATION*/
+#slider-wrap ul,
+#slider-pagination-wrap ul li {
+    -webkit-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
+    -o-transition: all 0.3s cubic-bezier(1, .01, .32, 1);
+    transition: all 0.3s cubic-bezier(1, .01, .32, 1);
+}
+/* carousel css end point */
+/* 출처 : https://github.com/SaintSilver */

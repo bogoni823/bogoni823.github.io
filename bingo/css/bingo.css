@@ -8,10 +8,11 @@
     }
 }
 html {
-    font-family: BMJUA;
+  font-family: BMJUA;
 }
 body {
   min-width: 550px;
+  text-align: center;
   font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
   font-size: 35px;
   font-weight: bold;
@@ -30,6 +31,10 @@ button:focus {
 }
 div[contenteditable=true]:focus {
   outline: #2196F3 solid 1px;
+}
+#bingo-start {
+  display: inline-block;
+  text-align: center;
 }
 .bingo {
   width: 500px;
@@ -93,6 +98,8 @@ div[contenteditable=true]:focus {
 #buttons {
   width: 500px;
   height: 110px;
+  display: inline-block;
+  text-align: center;
 }
 #button-group1 {
   width: 58%;
@@ -258,6 +265,9 @@ div[contenteditable=true]:focus {
   display: none;
 }
 .check-img {
+  width: 100px;
+  height: 100px;
+  background:url("../img/o.png") no-repeat;
   cursor: pointer;
 }
 .input-file [type="file"] {
@@ -281,7 +291,7 @@ div[contenteditable=true]:focus {
   color: #fff;
   text-align: center;
   cursor: pointer;
- }
+}
 .file-label:hover {
   background-color: #2196F3;
 }
@@ -314,12 +324,28 @@ div[contenteditable=true]:focus {
 .toast-title {
   font-size: 22px;
 }
+.img-box {
+  width: 100px;
+  height: 100px;
+  background:url("../img/box.png") no-repeat;
+}
+.img-icon {
+  background:url("../../img/img_icon.png") no-repeat;
+}
+.right-tab {
+  position: fixed;
+  top: 0px;
+  right: 0;
+}
+.tab-icons {
+  height: 65px;
+}
 [data-tooltip-text] {
   font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 }
 [data-tooltip-text]:hover:after {
   top: 45px;
-  left: -8px;
+  left: -24px;
   padding: 5px 12px;
   min-width: 30px;
   font-size: 12px;
@@ -336,10 +362,32 @@ div[contenteditable=true]:focus {
 }
 #span-set:hover:before {
   top: 36px;
-  left: 20px;
+  left: 4px;
 }
 #span-set:hover:after {
   content: "설정";
+  padding: 2px 8px;
+}
+#notice {
+  position: relative;
+  width: 42px;
+  height: 34px;
+  right: 0px;
+  margin: 4px;
+  background-position: -31px 0px;
+}
+#notice:hover {
+  background-position: -31px -34px;
+  cursor: pointer;
+}
+#span-notice:hover:before {
+  top: 31px;
+  left: 8px;
+}
+#span-notice:hover:after {
+  content: "공지";
+  top: 40px;
+  left: -20px;
   padding: 2px 8px;
 }
 #span-img:hover:after {
@@ -379,4 +427,65 @@ div[contenteditable=true]:focus {
   top: 44px;
   left: -29px;
   width: 124px;
+}
+.banner-img {
+  background:url("../img/img_banners.png") no-repeat;
+  display: block;
+  width: 620px;
+  height: 420px;
+}
+.banner1 {
+}
+.banner2 {
+  background-position: -620px 0px;
+}
+.banner3 {
+  background-position: -1240px 0px;
+}
+#slider-wrap ul#slider li>div h3 {
+  width: 610px;
+  text-align: right;
+}
+#slider-wrap ul#slider li>div span>span {
+  top: 0px;
+  left: 0px;
+  background: linear-gradient(to bottom, rgba(255, 234, 0, 0.35) 84%, transparent 50%);
+}
+.modal-footer>.modal-close-btn-disabled {
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #adadad;
+    border-radius: 4px;
+    background-color: #e6e6e6;
+    color: #333;
+}
+.modal-footer>label {
+  visibility: hidden;
+  position: relative;
+  left: -4px;
+  top: 28px;
+  float: left;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+  font-size: 12px;
+  font-weight: normal;
+  cursor: pointer;
+}
+.modal-footer>div {
+  position: relative;
+  top: 10px;
+  left: -235px;
+  font-family: '돋움', dotum, AppleGothic;
+  font-size: 14px;
+  font-weight: bold;
+}
+.modal-footer>label>input {
+  position: relative;
+  top: 1px;
+}
+.popup-module-disabled {
+    disabled: disabled;
+    cursor: default;
 }

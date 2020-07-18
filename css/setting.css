@@ -7,14 +7,12 @@
   display: none;
 }
 #set-img {
-  width: 30px;
+  width: 31px;
   height: 33px;
-  -webkit-filter: grayscale(100%);
-  filter: gray;
+  margin: 5px 0px;
 }
 #set-img:hover {
-  -webkit-filter: grayscale(0%);
-  filter: none;
+  background-position: 0px -33px;
 }
 .label {
    position: fixed;

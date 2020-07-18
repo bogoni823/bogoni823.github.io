@@ -2,29 +2,32 @@ const rand = document.getElementById("rand");
 const start = document.getElementById("start");
 const share = document.getElementById("share-button");
 const setting = document.getElementById("toggle");
-let tmp = 1, numbers, count = 0, bonus = false, size = 1;
-let arr = new Array(size*7);
-let arr_flag = new Array(size*7);
-for(var i=0; i<size*7; i++) arr_flag[i] = false;
+let tmp = 1, numbers, count = 0, size = 1, max_size = 7;
+let arr = new Array(size*max_size);
+let arr_flag = new Array(size*max_size);
+let arr_star = new Array(max_size+1);
+initStar(arr_star, max_size+1);
+for(var i=0; i<size*max_size; i++) arr_flag[i] = false;
 let local_flag = false;
+let img_star = "url('../img/star.svg') center center / 85% 85% no-repeat";
 const page_name = "index.html";
 
 toastr.options = {
-  "closeButton": false,
-  "debug": false,
-  "newestOnTop": false,
-  "progressBar": false,
-  "positionClass": "toast-top-center",
-  "preventDuplicates": false,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "2000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "2000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
 }
 
 var url_para = window.location.href.split(window.location.pathname)[1];
@@ -32,20 +35,28 @@ if(url_para.length) {
     try {
         if(url_para[0] !== "?") throw new Error("query error!");
         var arr_url_para = url_para.substr(1,url_para.length-1).split("&");
-        if(arr_url_para.length != 3) throw new Error("length error!");
-        var param_arr = getArrayURL(decodeURI(arr_url_para[2]), 7, 2);
-        setArray(param_arr);
+        if(arr_url_para.length < 2 || arr_url_para.length > 4) throw new Error("length error!");
+        if(arr_url_para.length > 2) {
+            var param_arr = getArrayURL(decodeURI(arr_url_para[2]), max_size, 2);
+            if(arr_url_para.length > 3) var param_star = getStarURL(arr_url_para[3], 3);
+            arr = param_arr;
+            setArray(arr);
+            if(arr_url_para.length > 3) {
+                decode16ToArr(param_star, arr_star);
+                viewStarFunc(arr, arr_star);
+            }
+        }
     }
     catch(e) {
         reloadPage();
     }
 }
 try {
-  history.pushState({},null,"./");
+    history.pushState({},null,"./");
 }
 catch(e) {
-  local_flag = true;
-  history.pushState({},null,location.pathname);
+    local_flag = true;
+    history.pushState({},null,location.pathname);
 }
 
 changeTitle();
@@ -60,9 +71,13 @@ function getindex(c) {
     return d
 }
 
-function getColor(num) {
-    var color;
-    if(isNaN(num) || num === "") return false;
+function getColor(id, num="") {
+    var color = "rgb(176, 216, 64)";
+    if(isNaN(num) || num === "" || num < 1 || num > 45) {
+        if(id <=3) color = "rgb(105, 200, 242)";
+        else if(id <= 5) color = "rgb(255, 114, 114)";
+        else if(id == 6) color = "rgb(170, 170, 170)";
+    }
     else if(num < 11) color = "#F5C842";
     else if(num < 21) color = "#95C5E6";
     else if(num < 31) color = "#EA8A82";
@@ -71,11 +86,25 @@ function getColor(num) {
     return color;
 }
 
-function setColor(id, color) {
-    document.getElementById(id).style.background = color;
+function setColor(obj_, color) {
+    obj_.style.background = color;
+}
+
+function mergeColor(arr_color) {
+    var res = arr_color[0];
+    for(var i=1; i<arr_color.length; i++) {
+        res+= ", " + arr_color[i];
+    }
+    return res;
+}
+
+function initStar(in_arr, len) {
+    in_arr[0] = 0;
+    for(var i=1; i<len; i++) in_arr[i] = false;
 }
 
 function decryptEffect(elem, time) {
+    initStar(arr_star, max_size+1);
     const effect = setInterval(function() {
         elem.innerText = Math.floor(Math.random()*44 + 1)
     }, 10);
@@ -84,8 +113,8 @@ function decryptEffect(elem, time) {
         clearInterval(effect),
         elem.classList.add("done"),
         elem.innerText = numbers[random];
-        var color = getColor(numbers[random]);
-        setColor(elem.id, color);
+        var color = getColor(elem.id, numbers[random]);
+        setColor(elem, color);
         numbers.splice(random, 1);
     },  time * 600 + 1000)
 }
@@ -102,8 +131,8 @@ function ranking() {
     if(count < 3) rank = "꽝!";
     else if(count == 3) rank = "5등";
     else if(count == 4) rank = "4등";
-    else if(count == 5 && bonus == false) rank = "3등";
-    else if(count == 5 && bonus == true) rank = "2등";
+    else if(count == 5 && arr_flag[6] == false) rank = "3등";
+    else if(count == 5 && arr_flag[6] == true) rank = "2등";
     else if(count == 6) rank = "1등";
     return rank;
 }
@@ -111,18 +140,19 @@ function ranking() {
 function scoring() {
     var rank = ranking();
     var text = "<font color='red'>"+rank+"</font> ┃ <font color='red'>"+count+"</font>개";
-    if(bonus) text += " + <font color='skyblue'>보너스</font>";
+    if(arr_flag[6]) text += " + <font color='skyblue'>보너스</font>";
     document.getElementById("score").innerHTML = text;
 }
 
-function setArray(in_arr, in_start=0, in_end=7) {
+function setArray(in_arr, in_start=0, in_end=max_size) {
     for(var i=in_start; i<in_end; i++) {
-        document.getElementById(i+1).innerText = in_arr[i];
-        setColor(i+1, getColor(in_arr[i]));
+        var elem = document.getElementById(i+1);
+        elem.innerText = in_arr[i];
+        setColor(elem, getColor(i+1, in_arr[i]));
     }
 }
 
-function getArray(in_start=0, in_end=7) {
+function getArray(in_start=0, in_end=max_size) {
     for(var i=in_start; i<in_end; i++) arr[i] = document.getElementById(i+1).innerText;
 }
 
@@ -140,7 +170,8 @@ rand.addEventListener("click", function() {
             start.disabled = false,
             rand.classList.remove("hide"),
             start.classList.remove("start-disabled"),
-            start.classList.add("btn")
+            start.classList.add("btn"),
+            getArray()
         }, 5700)
     )
 })
@@ -170,36 +201,25 @@ share.addEventListener("click", function() {
     if(!local_flag) url += page_name;
     var dup_check = true;
     getArray();
-    var uri = url + '?' + size + '&' + !dup_check + '&' + encodeURI(arr);
+    var uri = url + '?' + size + '&' + !dup_check;
+    for(var i=0; i<arr.length; i++) {
+        if(arr[i]) {
+            uri += '&' + encodeURI(arr);
+            if(arr_star[0]) uri += '&' + encodeArrTo16(arr_star, 3);
+            break;
+        }
+    }
     copy(uri);
     toastr.info("주소가 복사되었습니다");
     if(uri.length > 128) toastr.warning("디스코드를 통해 전달하세요!", "길이 초과!", {timeOut: 5000});
 })
 
 function clickBall(id) {
-    if(id<7) count++;
-    else bonus = !bonus;
+    if(id<max_size) count++;
 }
 
 function clickImg(id) {
-    if(id<7) count--;
-    else bonus = !bonus;
-}
-
-function addImg(game, object_, id_, class_, src_, x, y) {
-    var img = document.createElement("img");
-    img.setAttribute("id", id_);
-    img.setAttribute("class", class_);
-    img.setAttribute("src", src_);
-    img.style.position = "absolute";
-    img.style.left = x+"px";
-    img.style.top = y+"px";
-    if(game == "bingo" && size != 5 && size == 3 || size == 4) {
-        var percent = (size == 3 ? "33.5%" : "25.2%");
-        img.style.width = percent;
-        img.style.height = percent;
-    }
-    object_.append(img);
+    if(id<max_size) count--;
 }
 
 Array.from(document.querySelectorAll(".ball")).forEach(a => {
@@ -210,15 +230,20 @@ Array.from(document.querySelectorAll(".ball")).forEach(a => {
             var xx = evt.pageX-evt.offsetX;
             var yy = evt.pageY-evt.offsetY;
             clickBall(evt.target.id);
-            addImg("lotto", document.getElementById("numbers"), "img"+(evt.target.id), "check-img", "img/v.png", xx, yy);
+            addImg("lotto", document.getElementById("numbers"), "img"+(evt.target.id), "check-img", xx, yy);
             scoring();
         }
     })
     a.addEventListener("blur", evt => {
         if(start.style.display != "none") {
-            var number = document.getElementById(evt.target.id).innerHTML;
-            var color = getColor(number);
-            if(color) setColor(evt.target.id, color);
+            var number = evt.target.innerHTML;
+
+            if(arr[evt.target.id-1] == number) return;
+            arr[evt.target.id-1] = number;
+            var back_color;
+            if(arr_star[evt.target.id]) back_color = mergeColor([img_star, getColor(evt.target.id, number)]);
+            else back_color = getColor(evt.target.id, number);
+            setColor(evt.target, back_color);
         }
     })
 })
@@ -245,4 +270,36 @@ setting.addEventListener('change',function(e) {
     setTimeout(function() {document.head.removeChild(document.getElementById("style-span-set"));}, 400);
 });
 
-addImg("lotto", document.getElementById("numbers"), "img0", "check-img-del", "img/v.png", 0, 0);
+function viewStarFunc(in_arr, arr_boolean) {
+    if(arr_boolean[0]) {
+        var max_cnt = arr_boolean[0];
+        var cnt = 0;
+        for(var i=1; max_cnt-cnt>0; i++) {
+            if(arr_boolean[i]) {
+                cnt++;
+                var back_color = mergeColor([img_star, getColor(i, in_arr[i-1])]);
+                setColor(document.getElementById(i), back_color);
+            }
+        }
+    }
+}
+
+$(document).on("mousedown", ".ball", function(e) {
+    if(e.which != 2) return;
+    arr_star[this.id] = !arr_star[this.id];
+    var back_color;
+
+    if(arr_star[this.id]) {
+        arr_star[0]++;
+        back_color = mergeColor([img_star, getColor(this.id, this.innerText)]);
+    }
+    else {
+        arr_star[0]--;
+        back_color = getColor(this.id, this.innerText);
+    }
+    setColor(this, back_color);
+});
+
+/* 시작 후 공 클릭시 전체적으로 밀리는 현상 방지 */
+addImg("lotto", document.getElementById("numbers"), "img0", "check-img-del", 0, 0);
+getArray();

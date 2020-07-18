@@ -10,6 +10,8 @@ var plus_btn = document.getElementById("plus-button");
 plus_btn.addEventListener("click", plusBtn);
 var minus_btn = document.getElementById("minus-button");
 minus_btn.addEventListener("click", minusBtn);
+var popup_chk = document.getElementById("popup-7days");
+popup_chk.addEventListener("click", popupChk);
 var file_input = document.getElementById("file_input");
 var set_btn = document.getElementById("toggle");
 var dup_input = document.getElementById("checkbox");
@@ -18,6 +20,9 @@ var max_size = 100;
 var arr = new Array(size*size);
 var arr_flag = new Array(size*size);
 for(var i=0; i<size*size; i++) arr_flag[i] = false;
+var arr_star = new Array(max_size+1);
+arr_star[0] = 0;
+for(var i=1; i<arr_star.length; i++) arr_star[i] = false;
 var arr_rand = new Array(max_size);
 for( var i=0; i<max_size; i++) arr_rand[i] = i+1;
 var arr_x = new Array(3,101,200,299,397);
@@ -52,12 +57,17 @@ if(url_para.length) {
   try {
     if(url_para[0] !== "?") throw new Error("query error!");
     var arr_url_para = url_para.substr(1,url_para.length-1).split("&");
-    if(arr_url_para.length != 3) throw new Error("length error!");
+    if(arr_url_para.length < 2 || arr_url_para.length > 4) throw new Error("length error!");
     var param_size = getSizeURL(arr_url_para[0]);
     var param_dup = getDupURL(arr_url_para[1]);
-    var param_arr = getArrayURL(decodeURI(arr_url_para[2]), param_size*param_size, 3);
+    if(arr_url_para.length > 2) {
+      var param_arr = getArrayURL(decodeURI(arr_url_para[2]), param_size*param_size, 3);
+      if(arr_url_para.length > 3) var param_star = getStarURL(arr_url_para[3], param_size);
+    }
 
     document.getElementById("amount").value = param_size;
+    if(param_size == 10) plus_btn.disabled = "disabled";
+    else if(param_size == 1) minus_btn.disabled = "disabled";
     editTable(param_size);
 
     if(param_dup+"" == dup_check+"") {
@@ -65,11 +75,18 @@ if(url_para.length) {
       dup_input.checked = true;
     }
 
-    setArray(param_arr);
-    if(dup_check) dupFunc("del");
-    else {
-      $("<style id='style-span-dup'>#span-dup:hover:after{ content: '중복된 번호를 허용합니다'; }</style>").appendTo($("head"));
-      viewNumFunc();
+    if(arr_url_para.length > 2) {
+      setArray(param_arr);
+      if(dup_check) dupFunc("del");
+      else {
+        $("<style id='style-span-dup'>#span-dup:hover:after{ content: '중복된 번호를 허용합니다'; }</style>").appendTo($("head"));
+        viewNumFunc();
+      }
+
+      if(arr_url_para.length > 3) {
+        decode16ToArr(param_star, arr_star);
+        viewStarFunc(arr_star, param_size);
+      }
     }
   }
   catch(e) {
@@ -86,6 +103,52 @@ catch(e) {
 
 changeTitle();
 
+if(getCookie("bogoni-bingo") != "bogoni823") {
+  modal_popup_flag[0] = true;
+  modal_popup_flag[1] = true;
+  modal_popup_obj = document.querySelector(".modal-popup");
+  modal_popup_obj.style.visibility = "visible";
+
+  objDisabled(popup_chk);
+  objDisabled(modal_popup_obj);
+  objDisabled(modalCloseBtn);
+  objDisabled(modalCloseX);
+  objDisabled(modalOverlay);
+  modalCloseBtn.classList.add("modal-close-btn-disabled");
+  modalCloseBtn.classList.remove("modal-close-btn");
+
+  var timer = 5;
+  var popup_timer = document.getElementById("popup-timer");
+  popup_timer.innerHTML =   timer +'초 후 닫기 활성화';
+  var popup_checkbox_timer = setInterval(function(){
+    timer--;
+    var time_text = timer +'초 후 닫기 활성화';
+    popup_timer.innerHTML = time_text;
+    if(!timer) {
+      clearInterval(popup_checkbox_timer);
+      document.getElementById("popup-timer").innerHTML = "";
+      objEnabled(popup_chk);
+      objEnabled(modal_popup_obj);
+      objEnabled(modalCloseBtn);
+      objEnabled(modalCloseX);
+      objEnabled(modalOverlay);
+      modalCloseBtn.classList.add("modal-close-btn");
+      modalCloseBtn.classList.remove("modal-close-btn-disabled");
+      modal_popup_flag[1] = false;
+    }
+  },1000);
+
+  openModal();
+}
+
+function objDisabled(obj_) {
+  obj_.disabled = "disabled";
+  obj_.style.cursor = "default";
+}
+function objEnabled(obj_) {
+  obj_.disabled = false;
+  obj_.style.cursor = "pointer";
+}
 function writeTitle() {
   return "<font color='red'>보고니</font> B I N G O";
 }
@@ -155,7 +218,7 @@ function chkImg(id) {
   count++;
   var xx = arr_x[(parseInt(id)-1)%size];
   var yy = arr_y[parseInt((parseInt(id)-1)/size)];
-  addImg("bingo", $(".bingo-table"), ("img"+id), "check-img", "img/o.png", xx, yy);
+  addImg("bingo", $(".bingo-table"), ("img"+id), "check-img", xx, yy);
 }
 $(".bingo-number").click(function() {
   if(st_btn.style.display=="none") {
@@ -188,6 +251,20 @@ function clickImg(id) {
 /* id : common으로 합치기위한 불필요한 매개변수로 사용x */
   count--;
 }
+$(document).on("mousedown", ".bingo-number", function(e) {
+  if(e.which != 2) return;
+  var id = document.getElementById("td"+this.id);
+  arr_star[this.id] = !arr_star[this.id];
+  if(id.style.backgroundImage) {
+    arr_star[0]--;
+    id.style.backgroundImage = "";
+  }
+  else {
+    arr_star[0]++;
+    id.style.backgroundImage = "url('../img/star.svg')";
+    id.style.backgroundSize = "100% 100%";
+  }
+});
 function sizeChange(size) {
   arr_x.length = 0;
   arr_y.length = 0;
@@ -295,10 +372,19 @@ function randBtn() {
     for(var i=0; i<size*size; i++) arr[i] = randFunc();
   }
   viewNumFunc();
+
+  if(arr_star[0]) {
+    initStar(size);
+    viewStarFunc(arr_star, size, true);
+  }
 }
 function delBtn() {
   for(var i=0; i<size*size; i++) arr[i] = "";
   viewNumFunc();
+  if(arr_star[0]) {
+    initStar(size);
+    viewStarFunc(arr_star, size, true);
+  }
 }
 function inRudder() {
   if(!minus_btn.disabled && (event.keyCode == 37 || event.keyCode == 40)) minusBtn();
@@ -312,15 +398,13 @@ function inNumber() {
 function plusBtn() {
   if(minus_btn.disabled) minus_btn.disabled = false;
   if(size == 9) plus_btn.disabled = "disabled";
-  size++;
-  amount_input.value = size;
+  amount_input.value++;
   editTable(amount_input.value);
 }
 function minusBtn() {
   if(plus_btn.disabled) plus_btn.disabled = false;
   if(size == 2) minus_btn.disabled = "disabled";
-  size--;
-  amount_input.value = size;
+  amount_input.value--;
   editTable(amount_input.value);
 }
 dup_input.addEventListener('change',function(e) {
@@ -367,7 +451,7 @@ function arrAddFunc() {
       var xx = arr_x[dup_id%size];
       var yy = arr_y[parseInt(parseInt(dup_id)/size)];
       td.style.color = "#2196F3";
-      addImg("bingo", $(".bingo-table"), ("box"+dup_id), "box-img", "img/box.png", xx, yy);
+      addImg("bingo", $(".bingo-table"), ("box"+dup_id), "img-box", xx, yy);
       setTimeout(function() {
         td.style.color = "black";
         document.getElementsByClassName("bingo-table")[0].removeChild(document.getElementById("box"+dup_id));
@@ -379,9 +463,11 @@ function arrAddFunc() {
   }
 }
 function editTable(new_size) {
+  var prev_size = size;
   size = new_size;
   document.getElementsByTagName("table")[0].removeChild(document.getElementsByTagName("tbody")[0]);
   initArray(new_size);
+  if(arr_star[0]) initStar(prev_size);
   sizeChange(new_size);
   makeTable();
   for(var i=0; i<new_size*new_size; i++) arr[i] = i+1;
@@ -398,7 +484,6 @@ amount_input.addEventListener('input',function(e) {
     if(this.value != "") this.value = size;
     return;
   }
-  size = Number(this.value);
   editTable(this.value);
 });
 $(document).on("blur", "#amount", function() {
@@ -408,10 +493,67 @@ function setArray(in_arr) {
   arr.length = 0;
   arr = in_arr;
 }
+function initStar(size) {
+  arr_star[0] = 0;
+  for(var i=1; i<=size*size; i++) arr_star[i] = false;
+}
+function encodeArrTo16(arr_boolean, size) {
+  var idx = 1;
+  var res = "";
+  for(var j=0; j<size*size; j+=4) {
+    var half_byte = 0;
+    for(var i=0; i<4; i++) {
+      if(arr_boolean[idx+i]) half_byte += (1 << 3-i);
+    }
+    idx += 4;
+    res += half_byte.toString(16);
+  }
+  var len = res.length;
+  for(var i=len-1; i>0; i--) {
+    if(res[i]!='0') break;
+    len--;
+  }
+  return res.slice(0,len);
+}
+function decode16ToArr(str_16, out_arr) {
+  for(var i=0; i<str_16.length; i++) {
+    var half_byte = parseInt(str_16.substr(i,1), 16);
+    for(var j=0; j<4; j++) {
+      if(half_byte & 1) {
+        out_arr[i*4+4-j] = true;
+        out_arr[0]++;
+      }
+      half_byte = half_byte >>> 1;
+    }
+  }
+}
+function viewStarFunc(arr_boolean, size, flag) {
+  if(arr_boolean[0] || flag) {
+    var max_cnt = arr_boolean[0];
+    var cnt = 0;
+    if(flag) max_cnt = size*size+1;
+    for(var i=1; max_cnt-cnt>0 && i<=size*size; i++) { /* 두번째 조건은 불필요각 */
+      var id = document.getElementById("td"+i);
+      if(arr_boolean[i]) {
+        id.style.backgroundImage = "url('img/star.svg')";
+        id.style.backgroundSize = "100% 100%";
+        cnt++;
+      }
+      else id.style.backgroundImage = "";
+    }
+  }
+}
 function shareBtn() {
   var url = window.location;
   if(!local_flag) url += page_name;
-  var uri = url + '?' + size + '&' + !dup_check + '&' + encodeURI(arr);
+  var uri = url + '?' + size + '&' + !dup_check;
+  for(var i=0; i<arr.length; i++) {
+    if(arr[i]) {
+      uri += '&' + encodeURI(arr);
+      if(arr_star[0]) uri += '&' + encodeArrTo16(arr_star, size);
+      break;
+    }
+  }
   copy(uri);
   toastr.info("주소가 복사되었습니다");
   if(uri.length > 128) toastr.warning("디스코드를 통해 전달하세요!", "길이 초과!", {timeOut: 5000});
@@ -433,3 +575,9 @@ set_btn.addEventListener('change',function(e) {
   $("<style id='style-span-set'> #span-set:after { opacity: 0; }#span-set:before { opacity: 0; } </style>").appendTo($("head"));
   setTimeout(function() {document.head.removeChild(document.getElementById("style-span-set"));}, 400);
 });
+function popupChk() {
+  setCookie("bogoni-bingo", "bogoni823", 7);
+  closeModal();
+}
+/* 태그 갯수 1000개 미만 권장(체크용) */
+//console.log(document.getElementsByTagName("*").length);

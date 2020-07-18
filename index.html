@@ -14,39 +14,37 @@
   <link rel="stylesheet" href="css/tooltip.css">
 </head>
 <body>
-  <center>
   <video id="title-video" muted autoplay loop>
     <source src="img/title.mp4" type="video/mp4">
     IE 8 이하는 비디오가 나오지 않습니다. IE 버전을 업데이트 하시길 바랍니다.
   </video>
-  <div id="title"><font color="#F299B7" style="text-shadow:1px 1px 10px darkblue;">보고니</font><br> 게임 천국</div>
+  <div id="title"><div id="title-name">보고니</div>게임 천국</div>
   <div id="buttons">
-    <div id="button group1">
+    <div id="button-group1">
       <span id="span-cyan" data-tooltip-text="빙고 게임">
         <a id="a-bingo" href="bingo" class="btn-3d cyan">
-	      <img id="btn-img bingo" class="btn-img" src="img/bingo.png" alt="빙고">
+	      <div id="bingo" class="btn-img bingo"></div>
 	    </a>
       </span>
       <span id="span-yellow" data-tooltip-text="로또 게임">
         <a id="a-lotto" href="lotto" class="btn-3d yellow">
-          <img id="lotto" class="btn-img" src="img/lotto.png" alt="로또">
+          <div id="lotto" class="btn-img lotto"></div>
         </a>
       </span>
     </div>
-    <div id="button group2">
+    <div id="button-group2">
       <span id="span-blue" data-tooltip-text="아프리카TV">
         <a href="http://bj.afreecatv.com/bogong" class="btn-3d blue">
-	      <img id="btn-img afreecatv" class="btn-img" src="img/afreecatv.png" alt="아프리카티비">
+          <div id="afreecatv" class="btn-img afreecatv"></div>
 	    </a>
       </span>
       <span id="span-green" data-tooltip-text="인스타그램">
         <a href="https://www.instagram.com/bo_go_ni" class="btn-3d green">
-          <img id="instar" class="btn-img" src="img/instar.png" alt="인스타">
+          <div id="instar" class="btn-img instar"></div>
         </a>
       </span>
     </div>
   </div>
-  </center>
   <footer>
     <p>ⓒ AfreecaTV 보고니</p>
   </footer>

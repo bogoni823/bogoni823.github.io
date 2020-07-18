@@ -12,6 +12,7 @@ html {
     font-family: BMJUA
 }
 body {
+  text-align: center;
   min-width: 550px;
 }
 #title-video {
@@ -23,22 +24,52 @@ body {
   top: -80px;
   font-size: 50px;
   font-weight: bold;
-  text-shadow:1px 1px 10px #f40
+  text-shadow: 1px 1px 10px #f40
+}
+#title-name {
+  color: #F299B7;
+  text-shadow: 1px 1px 10px darkblue;
 }
 #buttons {
   position: relative;
   top: -60px;
 }
+.btn-img {
+  background:url("../img/img_main.png") no-repeat;
+}
+.bingo {
+  width: 100px;
+  height: 100px;
+}
+.lotto {
+  width: 100px;
+  height: 100px;
+  background-position: -100px;
+}
+.afreecatv {
+  width: 100px;
+  height: 100px;
+  background-position: -200px;
+}
+.instar {
+  width: 100px;
+  height: 100px;
+  background-position: -300px;
+}
 #span-cyan:hover:after {
+  top: 30%;
   left: 28%;
 }
 #span-yellow:hover:after {
+  top: 30%;
   left: 28%;
 }
 #span-blue:hover:after {
+  top: 30%;
   left: 23.5%;
 }
 #span-green:hover:after {
+  top: 30%;
   left: 25%;
 }
 footer {
