@@ -52,7 +52,7 @@ div[contenteditable=true]:focus {
   left: 0;
   top: 0;
   content: "";
-  background: url("http://stimg.afreecatv.com/LOGO/bo/bogong/bogong.jpg");
+  background: url("https://stimg.afreecatv.com/LOGO/bo/bogong/bogong.jpg");
   background-size: 500px 500px;
   opacity: 0.5;
 }
