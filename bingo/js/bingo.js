@@ -32,6 +32,7 @@ var edit_id = false;
 var edit_value = false;
 var img_flag = false;
 var local_flag = false;
+var path_star = "'../img/star.svg'";
 const page_name = "index.html";
 
 toastr.options = {
@@ -261,7 +262,7 @@ $(document).on("mousedown", ".bingo-number", function(e) {
   }
   else {
     arr_star[0]++;
-    id.style.backgroundImage = "url('../img/star.svg')";
+    id.style.backgroundImage = "url(" + path_star + ")";
     id.style.backgroundSize = "100% 100%";
   }
 });
@@ -535,7 +536,7 @@ function viewStarFunc(arr_boolean, size, flag) {
     for(var i=1; max_cnt-cnt>0 && i<=size*size; i++) { /* 두번째 조건은 불필요각 */
       var id = document.getElementById("td"+i);
       if(arr_boolean[i]) {
-        id.style.backgroundImage = "url('img/star.svg')";
+        id.style.backgroundImage = "url(" + path_star + ")";
         id.style.backgroundSize = "100% 100%";
         cnt++;
       }
