@@ -51,24 +51,33 @@ body {
   height: 100px;
   background-position: -200px;
 }
+.youtube {
+  width: 100px;
+  height: 100px;
+  background-position: -400px;
+}
 .instar {
   width: 100px;
   height: 100px;
   background-position: -300px;
 }
-#span-cyan:hover:after {
+#span-bingo:hover:after {
   top: 30%;
   left: 28%;
 }
-#span-yellow:hover:after {
+#span-lotto:hover:after {
   top: 30%;
   left: 28%;
 }
-#span-blue:hover:after {
+#span-afreecatv:hover:after {
   top: 30%;
   left: 23.5%;
 }
-#span-green:hover:after {
+#span-youtube:hover:after {
+  top: 30%;
+  left: 32.5%;
+}
+#span-instar:hover:after {
   top: 30%;
   left: 25%;
 }
